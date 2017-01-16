@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link href="{% static 'login.css' %}" rel='stylesheet' type='text/css' />
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/Font-Awesome-3.2.1/css/font-awesome.min.css' %}" media="screen" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script> -->
+<!--webfonts-->
+<!-- <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700|Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'> -->
+<!--//webfonts-->
+</head>
+
+<body style="background-color: rgb(49,159,220)">
+<div id="logo">
+    <h1>EasyFind</h1>
+    <p style="margin-top:5px;font-size:15px"><em>all to participate,easy to find</em></p>
+  </div>
+  <div id="header" style="margin-left: 271px;">
+    <div id="menu">
+      <ul>
+        <li><a class="first">关于我们</a></li>
+        <li class="current_page_item"><a>联系我们</a></li>
+      </ul>
+    </div>
+    </div>
+    
+  <div class="content" style="height: 509px;font-size: 15px">
+    <div class="main">
+    <div class="login">
+      <div class="inset">
+        <!-----start-main---->
+        <form method='post' style="max-width:500px">
+          {% csrf_token %}
+        <tr><th><label for="id_account" class="icon-user">&nbsp&nbsp账号</label></th><td><input id="id_account" name="account" class="textbox"  type="text"  /></td></tr>
+        <tr><th><label for="id_password" class="icon-lock" style="display: block">&nbsp&nbsp密码</label></th><td><input id="id_password" name="password" class="password" type="password" ></td></tr>
+        <div class="sign">
+          <div class="submit" style="margin-bottom:20px">
+          <input type="submit" value="登录" class="btn btn-primary">
+          <a href="logon" >注册</a>
+        </div>
+        <span class="forget-pass">
+          <a href="#" style="margin-right: 22px">忘记密码？</a>
+        </span>
+        <div class="clear" style="margin:0 10px;color:red;font-size:15px">{{res}} </div>
+    </div>
+      </form>
+        </div>
+      </div>
+  
+  
+    <!-----//end-main---->
+    </div>
+     <!-----start-copyright---->
+            <div class="copy-right">
+          </div>
+        <!-----//end-copyright---->
+  </div>
+    
+
+</body>
+</html>

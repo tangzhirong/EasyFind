@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Region > Country > Division</title>
+	<style type="text/css">
+		select {
+			background-color: #ffffff;
+			border: 1px solid #cccccc;
+			display: inline-block;
+			height: 32px;
+			font-size: 14px;
+			line-height: 20px;
+			color: #555555;
+			vertical-align: middle;
+			width: 220px;
+		}
+	</style>
+</head>
+<body>
+	<!-- Region-Provice-City HTML -->
+	<div class="city-picker">
+		<span>
+			Region: <select class="region" /></select>
+		</span>
+		<span>
+			Province: <select class="province"></select>
+		</span>
+		<span>
+			City: <select class="city"></select>
+		</span>
+	</div> <!-- .city-picker -->
+
+	<!-- JavaScript -->
+	<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="city-picker.js"></script>
+	<script type="text/javascript">
+		$('.city-picker').cityPicker({
+			required: true
+		});
+	</script>
+</body>
+</html>

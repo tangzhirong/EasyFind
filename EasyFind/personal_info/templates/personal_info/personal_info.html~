@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : The Fences
+Description: A two-column, fixed-width design for 1024x768 screen resolutions.
+Version    : 1.0
+Released   : 20100308
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>泛搜索</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body style="background-color:rgb(49,159,220)">
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p style="margin-top:5px;font-size:15px"><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu" style="margin-top:5px">
+			<ul>
+				<li><a href="/{{personInfo.account}}" class="first" style="height:40px;font-size:20px">返回主页</a></li>
+			</ul>
+		</div>
+		<!-- end #menu -->
+
+		<!-- end #search -->
+	</div>
+	<!-- end #header -->
+	<!-- end #header-wrapper -->
+	<!-- <div id="page" >
+		<div id="content" style="font-family: Arial, Helvetica, sans-serif;font-size: 18px;font-weight: normal;">
+			<form method='post' style="margin-left:20px;width:30%">
+				{% csrf_token %}
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_account">账号</label></th><td><input id="id_account" class="form-control"  name="account" type="text" value='{{personInfo.account}}' readonly /></td></tr>
+				</div>
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_password">密码</label></th><td><input id="id_password" class="form-control" name="password" type="text" value='{{personInfo.password}}' /></td></tr>
+				</div>
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_nickname">昵称</label></th><td><input id="id_nickname" class="form-control" name="nickname" type="text" value='{{personInfo.nickname}}' /></td></tr>
+				</div>
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_gender">性别</label></th>
+						<td><select id="id_gender" class="form-control" name="gender" type="text"/>
+							<option value="男" >男</option>
+							<option value="女" >女</option>
+						</select></td>
+					</tr>
+				</div>
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_email">电子邮箱</label></th><td><input id="id_email" class="form-control" name="email" type="text" value='{{personInfo.email}}'/></td></tr>
+				</div>
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_phone">电话</label></th><td><input id="id_phone" class="form-control"  name="phone" type="text" value='{{personInfo.phone}}'/></td></tr>
+				</div>
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_province">省份</label></th><td><input id="id_province" class="form-control" name="province" type="text" value='{{personInfo.province}}'/></td></tr>
+				</div>
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_city">城市</label></th><td><input id="id_city" name="city" class="form-control" type="text" value='{{personInfo.city}}'/></td></tr>
+				</div>
+				<div class="form-group">
+					<tr><th><label style='font-weight:550' for="id_reputation">信誉值</label></th><td><input id="id_reputation" class="form-control" name="reputation" type="number" value='{{personInfo.reputation}}' readonly/></td></tr>
+				</div>
+				<input type="submit" value="提交" class="btn btn-primary">
+			</form>
+
+		</div>
+		<div style="clear: both;">&nbsp;</div>
+	</div> -->
+	<!-- end #page -->
+
+	<div class="register-container container" style='background-color:rgb(49,159,220)' >
+							<div class="row">
+									<div class="iphone span5" style="float:left;margin-left:-500px;margin-top:20px">
+											<img src="../../../static/images/iphone.png" alt="" style="margin-top:100px">
+									</div>
+									<div class="register span6" style='float:left;width:50%;margin-top:20px;margin-right:20px' >
+
+											<form action="" method="post" enctype="multipart/form-data">
+												{% csrf_token %}
+													<!-- <h2>编辑任务详情</h2> -->
+													<label for="id_account">账号</label>
+													<input type="text" id="id_account"  name="account" class="form-control" value='{{personInfo.account}}' readonly >
+													<label for="id_password">密码</label>
+													<input type="text" id="id_password"  name="password" class="form-control" value='{{personInfo.password}}' >
+													<label for="id_nickname">昵称</label>
+													<input type="text" id="id_nickname"  name="nickname" class="form-control" value='{{personInfo.nickname}}' >
+													<label for="id_gender" >性别</label>
+													<select id="id_gender" class="form-control" name="gender" type="text" style="margin-left:0px"/>
+														<option value="男" >男</option>
+														<option value="女" >女</option>
+													</select>
+													<label for="id_email">电子邮箱</label>
+													<input type="text" id="id_email"  name="email" class="form-control" value='{{personInfo.email}}' >
+													<label for="id_phone">电话</label>
+													<input type="text" id="id_phone"  name="phone" class="form-control" value='{{personInfo.phone}}' >
+													<label for="id_province">省份</label>
+													<input type="text" id="id_province"  name="province" class="form-control" value='{{personInfo.province}}' >
+													<label for="id_city">城市</label>
+													<input type="text" id="id_city"  name="city" class="form-control" value='{{personInfo.city}}' >
+													<label for="id_reputation">信誉值</label>
+													<input type="text" id="id_reputation"  name="reputation" class="form-control" value='{{personInfo.reputation}}' readonly >
+													<button type="submit" >提交</button>
+											</form>
+									</div>
+							</div>
+					</div>
+
+	<div id="footer">
+
+	</div>
+	<!-- end #footer -->
+</body>
+</html>

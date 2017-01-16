@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>泛搜索</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+{% load staticfiles %}
+<link href="{% static 'jquery.modal.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-xenon.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-atlant.css' %}" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/Font-Awesome-3.2.1/css/font-awesome.min.css' %}" media="screen" />
+<script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery.modal.min.js' %}"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		var tag = {{tag|safe}};
+		if(tag == 'ok'){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: '个人信息修改成功!',
+				callback:function(){
+					location.href = '';
+				}
+			});
+		}else if(tag == 'no'){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: '个人信息修改失败!',
+				callback:function(){
+					location.href = '';
+				}
+			});
+		}
+	}
+</script>
+</head>
+<body>
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu">
+			<ul>
+				<li><a href="/{{personInfo.account}}" class="first">返回主页</a></li>
+			</ul>
+		</div>
+	</div>
+	
+
+	<div class="register-container container" >
+		<div class="row">
+			<div class="iphone span5" >
+				<img src="../../../static/images/iphone.png" alt="" >
+			</div>
+			
+			<div class="register span6 personal_register" >
+				<form action="" method="post" enctype="multipart/form-data" >
+					{% csrf_token %}
+												
+						<label for="id_account" class="icon-user">&nbsp&nbsp账号</label>
+						<input type="text" id="id_account"  name="account" class="form-control" value='{{personInfo.account}}' readonly >
+						
+						<label for="id_password" class="icon-lock">&nbsp&nbsp密码</label>
+						<input type="text" id="id_password"  name="password" class="form-control" value='{{personInfo.password}}' >
+													
+						<label for="id_nickname" class="icon-tags">&nbsp&nbsp昵称</label>
+						<input type="text" id="id_nickname"  name="nickname" class="form-control" value='{{personInfo.nickname}}' >
+													
+						<label for="id_gender" class="icon-user-md">&nbsp&nbsp性别</label>
+						<div class="gender">
+							<select id="id_gender" class="form-control" name="gender" type="text" />
+								<option value="男" >男</option>
+								<option value="女" >女</option>
+							</select>
+						</div>
+													
+						<label for="id_email" class="icon-envelope">&nbsp&nbsp电子邮箱</label>
+						<input type="text" id="id_email"  name="email" class="form-control" value='{{personInfo.email}}' >
+													
+						<label for="id_phone" class="icon-phone">&nbsp&nbsp电话</label>
+						<input type="text" id="id_phone"  name="phone" class="form-control" value='{{personInfo.phone}}' >
+													
+						<label for="id_province" class="icon-globe">&nbsp&nbsp省份</label>
+						<input type="text" id="id_province"  name="province" class="form-control" value='{{personInfo.province}}' >
+													
+						<label for="id_city" class="icon-home">&nbsp&nbsp城市</label>
+						<input type="text" id="id_city"  name="city" class="form-control" value='{{personInfo.city}}' >
+													
+						<label for="id_reputation" class="icon-trophy">&nbsp&nbsp信誉值</label>
+						<input type="text" id="id_reputation"  name="reputation" class="form-control" value='{{personInfo.reputation}}' readonly >
+					         <label for="id_picture" class="icon-github-alt">&nbsp&nbsp更换头像</label>
+                                                <input type="file" id="id_picture"  name="picture" class="form-control" value='{{personInfo.picture}}' >
+						<button type="submit" >提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer"></div>
+	<!-- end #footer -->
+</body>
+</html>

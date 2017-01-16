@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'echarts.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    
+<select id="user_select">
+            {% for user in users%}
+            <option value="{{user.account}}">{{user.nickname}}</option>
+            {%endfor%}
+</select>
+<button onclick="showUserInfo()">查询</button>
+    
+<div id="main" style="width: 600px;height:400px;"></div>
+    
+    <script type="text/javascript">
+        
+//user select
+$(document).ready(function(){
+    var userChart = echarts.init(document.getElementById('main'));
+    // userChart.showLoading({  
+    //             text : "图表数据正在努力加载..."  
+    //         });  
+    // })
+
+    var taskname = [];
+    var participates = [];
+    var status = [];
+    // 指定图表的配置项和数据
+    userOption = {
+    // color: ['#C1232B','#E87C25','#B5C334','#FCCE10'],
+    //  legend: {
+    //         data:[]
+    // },
+    tooltip : {
+        trigger: 'axis',
+        formatter: function (params) {
+                   console.log(params);
+                    return params[0].name+"|参与者数目:"+params[0].data;
+        },
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : taskname,
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+        }
+    ],
+    series : [
+        {
+            name:'status',
+            type:'bar',
+            barWidth: '60%',
+            data:participates
+        }
+    ]
+};
+userChart.setOption(userOption);  
+showUserInfo();
+
+function showUserInfo(){
+    getUserChartData();
+    setInterval(function(){
+         getUserChartData();
+    }, 30000);
+}
+
+function getUserChartData() {  
+            //获得图表的options对象  
+            var options = userChart.getOption();  
+            var account = $('#user_select').val();
+            console.log(account);
+            //通过Ajax获取数据  
+            $.ajax({  
+                type : "post",  
+                async : true,  
+                url : "/getUserInfo/",  
+                data : {'account':account},  
+                dataType : "json", //返回数据形式为json  
+                success : function(result) {  
+                    if (result) {  
+                        taskname = [];
+                        participates = [];
+                        status = [];
+                        for(i in result){
+                            taskname.push(result[i].name);
+                            participates.push(result[i].participates.length);
+                            status.push(result[i].status);
+                        }
+                        var colorList = {
+                            '未分配' : '#C1232B',
+                            '已定位' :'#B5C334', 
+                            '已完结':'#FCCE10', 
+                            '定位中':'#E87C25'
+                        };
+                        userChart.hideLoading();  
+                        userChart.setOption({
+                            title: {
+                                text: '动态数据 - 用户任务情况'
+                            },
+                           xAxis : [
+                                {
+                                    type : 'category',
+                                    data : taskname,
+                                    axisTick: {
+                                        alignWithLabel: true
+                                    }
+                                }
+                        ],
+                         yAxis : [
+                            {
+                                type : 'value',
+                            }
+                        ],
+                         legend: {
+                            data:['未分配', '定位中', '已定位','已完结'],
+                        },
+                        series : [
+                                {
+                                    name:'status',
+                                    type:'bar',
+                                    barWidth: '60%',
+                                    itemStyle: {
+                                         normal: {
+                                             color: function(params) {
+                                                // console.log(params);
+                                                 return colorList[status[params.dataIndex]];
+                                             }
+                                         }
+                                    },
+                                    data:participates
+                                }
+                         ]
+                        });
+                    }
+                },  
+                error : function(errorMsg) {  
+                    alert("不好意思，大爷，图表请求数据失败啦!");  
+                    userChart.hideLoading();  
+                }  
+            });  
+}  
+});
+</script>
+</body>
+</html>

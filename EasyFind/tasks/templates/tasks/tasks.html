@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>泛搜索</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+{% load staticfiles %}
+<link href="{% static 'jquery.modal.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-xenon.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-atlant.css' %}" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/Font-Awesome-3.2.1/css/font-awesome.min.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<script type="text/javascript" src="{% static 'city-picker-master/jquery-1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'city-picker-master/city-picker.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery.modal.min.js' %}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var inputs = document.getElementsByTagName('input');
+		for(var i=0,len=inputs.length;i<len;i++){
+			inputs[i].onblur = function(){
+				checkFormat(this);
+			}
+		}
+	})
+
+	function checkFormat(input){
+		var ok = input.nextSibling.nextSibling;
+		var wrong = ok.nextSibling;
+		var type = input.id;
+		var text = input.value;
+		switch(type){
+			case 'id_name':
+				var length = getLength(text);
+				if(length==0||length>16){
+					ok.style.display='none';
+					wrong.style.display='inline-block';
+				}else{
+					ok.style.display='inline-block';
+					wrong.style.dispaly='none';
+				}
+				break;
+			case 'id_district':
+			case 'id_street':
+				var length = getLength(text);
+				var reg = new RegExp('^[\u4e00-\u9fa5]+$');
+                                		if(text.match(reg)){
+                                			ok.style.display='inline-block';
+					wrong.style.display='none';
+                                		}else{
+                                        		wrong.style.display='inline-block';
+					ok.style.display='none';
+                                		}
+                                		break;
+
+			case 'id_total':
+				var reg = new RegExp("^[0-9]+$");
+				if(reg.test(text)){
+					ok.style.display='inline-block';
+					wrong.style.display='none';
+				}else{
+					wrong.style.display='inline-block';
+					ok.style.display='none';
+				}
+				break;
+			
+			default:
+
+		}
+	}
+
+	function getLength(text){
+		var len =0;
+		for(var i=0;i<text.length;i++){
+			var charCode = text.charCodeAt(i);
+			if(charCode >=0 && charCode<=128){
+				len+=1;
+			}else{
+				len+=2;
+			}
+		}
+		return len;
+	}
+
+	window.onload = function(){
+		var tag = {{tag|safe}};
+			if(tag == 'ok'){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: '任务发布成功!',	
+				callback:function(){
+					location.href = '/';
+				}
+			});
+			}else if(tag == 'no'){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: '任务发布失败!',
+				callback:function(){
+					location.href = '/';
+				}
+			});
+			}
+	}
+	
+	
+
+</script>
+</head>
+<body>
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	
+	<div id="header">
+		<div id="menu">
+			<ul>
+				<li><a href="/{{user.account}}" class="first" >返回主页</a></li>
+			</ul>
+		</div>
+		
+	</div>
+	
+	<div class="register-container container" >
+		<div class="row">
+			<div class="iphone span5" >
+				<img src="../../../static/images/iphone.png" alt="" >
+			</div>
+
+			<div class="register span6" >
+
+				<form action="" method="post" enctype="multipart/form-data" class="task_form">
+					{% csrf_token %}
+				                      	<tr>
+				                      		<th><label for="id_name" class="icon-tasks">&nbsp&nbsp任务名称</label></th>
+				                      		<td><input type="text" id="id_name"  name="name" placeholder="1-16个字符(如：寻找孩子)" ></td>
+				                      		<td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove" style="display:none;"></i></td>
+				                      	</tr>
+				                        
+				                        
+				                        
+				                        <label for="id_device" class="icon-plane">&nbsp&nbsp搜索设备</label>
+				                        <div style="width: 30%">
+				                        		<select id="id_device" class="form-control" name="device" type="text" />
+								{% for device in devices %}
+									<option value='{{device.uuid}}'>{{device.name}}</option>
+								{% endfor %}
+							</select>
+				                        </div>
+																
+
+						<label for="id_info" class="icon-comment">&nbsp&nbsp任务描述</label>
+					             <div>
+					             	<textarea type="text" id="id_info" name="info" class="form-control" placeholder="简要描述一下你的任务吧"></textarea>
+					             </div>
+						
+						<div class="city-picker">
+							<label for="id_region" class="icon-globe">&nbsp&nbsp搜索区域</label>
+							<div style="width: 30%"><select class="region form-control" ></select></div>
+																		
+							<label for="id_province" class="icon-cloud">&nbsp&nbsp搜索省份</label>
+							<div style="width: 30%"><select id="id_province"   class="province form-control" name="province" type="text" /></select></div>
+																		
+							<label for="id_city" class="icon-inbox">&nbsp&nbsp搜索城市</label>
+							<div style="width: 30%">
+								<select id="id_city"  class="city form-control" name="city" type="text" /></select>
+							</div>
+						</div>
+
+						<tr>
+							<th><label for="id_district" class="icon-home">&nbsp&nbsp搜索城区</label></th>
+							<td><input id="id_district" name="district"  type="text"  placeholder="如：东城区(可留空)" /></input></td>
+							<td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove" style="display:none;"></i></td>
+						</tr>
+						
+						
+						<tr>
+							<th><label for="id_street" class="icon-road">&nbsp&nbsp搜索街道</label></th>
+							<td><input id="id_street" name="street" type="text"   placeholder="如：惠民街(可留空)" /></input></td>
+							<td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove" style="display:none;"></i></td>
+						</tr>											
+						
+						
+						<tr>
+							<th><label for="id_total" class="icon-money">&nbsp&nbsp悬赏总额</label></th>
+							<td><input type="text" name="total" id="id_total" placeholder="单位：元（请直接填写数字，如：1000）" style="padding-left:10px "></input></td>
+							<td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove" style="display:none;"></i></td>
+						</tr>											
+						
+					          											
+						<label for="id_picture" class="icon-upload-alt">&nbsp&nbsp上传图片</label>
+						<input id="id_picture"  name="picture" type="file" style="margin-left:10px"/></input>
+
+
+				                        <button type="submit" class="submit">提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$('.city-picker').cityPicker({
+			        required: true
+		});
+	</script>
+
+
+	<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #page -->
+	<div id="footer"></div>
+	<!-- end #footer -->
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : The Fences
+Description: A two-column, fixed-width design for 1024x768 screen resolutions.
+Version    : 1.0
+Released   : 20100308
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>泛搜索</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+<script type="text/javascript" src="{% static 'city-picker-master/jquery-1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'city-picker-master/city-picker.js' %}"></script>
+
+</head>
+<body style="background-color:rgb(49,159,220)">
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p style="margin-top:5px;font-size:15px"><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu" style="margin-top:5px">
+			<ul>
+				<li><a href="/{{user.account}}" class="first" style="height:40px;font-size:20px">返回主页</a></li>
+			</ul>
+		</div>
+		<!-- end #menu -->
+
+		<!-- end #search -->
+	</div>
+	<!-- end #header -->
+	<!-- end #header-wrapper -->
+
+				<div class="register-container container" style='background-color:rgb(49,159,220)' >
+				            <div class="row">
+				                <div class="iphone span5" style="float:left;margin-left:-500px;margin-top:20px">
+				                    <img src="../../../static/images/iphone.png" alt="" style="margin-top:100px">
+				                </div>
+				                <div class="register span6" style='float:left;width:50%;margin-top:20px;margin-right:20px' >
+
+				                    <form action="" method="post" enctype="multipart/form-data" style="position: absolute;top: 200px;left:700px;width:500px;">
+															{% csrf_token %}
+				                        <!-- <h2>编辑任务详情</h2> -->
+				                        <label for="id_name">任务名称</label>
+				                        <input type="text" id="id_name"  name="name" >
+				                        <label for="id_device">搜索设备</label>
+																<select id="id_device" class="form-control" name="device" type="text" />
+																{% for device in devices %}
+																	<option value='{{device.uuid}}'>{{device.name}}</option>
+																	{% endfor %}
+																</select>
+
+																	<label for="id_info">任务描述</label>
+					                        <div><textarea type="text" id="id_info" name="info" class="form-control" placeholder="简要描述一下你的任务吧"></textarea></div>
+																	<div class="city-picker">
+																		<label for="id_region">搜索区域</label>
+																		<select class="region form-control" ></select>
+																		<label for="id_province">搜索省份</label>
+																		<select id="id_province"   class="province form-control" name="province" type="text" /></select>
+																		<label for="id_city">搜索城市</label>
+																		<select id="id_city"  class="city form-control" name="city" type="text" /></select>
+																	</div>
+
+																	<label for="id_district">搜索城区</label>
+																	<input id="id_district" name="district"  type="text" /></select>
+																	<label for="id_street">搜索街道</label>
+																	<input id="id_street" name="street" type="text" /></select>
+																	<label for="id_total">悬赏总额</label>
+					                        <input type="text" name="total" id="id_total" >
+																	<label for="id_picture">上传图片</label>
+																	<input id="id_picture" class="form-control" name="picture" type="file" style="margin-left:15px"/>
+
+
+				                        <button type="submit" >提交</button>
+				                    </form>
+				                </div>
+				            </div>
+				        </div>
+
+			<script type="text/javascript">
+			    $('.city-picker').cityPicker({
+			        required: true
+			    });
+
+			</script>
+
+
+		</div>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #page -->
+	<div id="footer">
+
+	</div>
+	<!-- end #footer -->
+
+</body>
+</html>

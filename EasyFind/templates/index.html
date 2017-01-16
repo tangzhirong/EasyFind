@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<title>泛搜索|{{user.nickname}}</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=iyPuuhgLuXn9kgnqiyC32m6Z"></script>
+<script type="text/javascript" src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
+
+{% load staticfiles %}
+<link href="{% static 'jquery.modal.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-xenon.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-atlant.css' %}" type="text/css" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="{% static 'jquery.dropdown.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'lightbox.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/Font-Awesome-3.2.1/css/font-awesome.min.css' %}" media="screen" />
+<script type="text/javascript" src="{% static 'jquery.dropdown.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'csrf.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery-1.10.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery.modal.min.js' %}"></script>
+<script src="{% static 'ws4redis.js'%}" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+	
+	jQuery(document).ready(function($) {
+    	var ws4redis = WS4Redis({
+        	uri: 'ws://127.0.0.1:8000/ws/foobar?',
+        	receive_message: receiveMessage,
+        	heartbeat_msg:"--heartbeat--"
+    });
+
+    
+
+    // attach this function to an event handler on your site
+    //function sendMessage() {
+    //    ws4redis.send_message('A message');
+    //}
+
+    //function on_connected() {
+    //    ws4redis.send_message('Hello');
+    //}
+
+    // receive a message though the websocket from the server
+    function receiveMessage(msg) {
+        modal({
+		type: 'alert',
+		title: '提醒',
+		text: msg,
+		callback:function(){
+			location.reload();
+		}
+	});
+        
+    }
+    //change image path to  no_compressed
+    $("#content .post .meta a").each(function(){
+    	var picUrl = $(this).attr("id");
+	var picArr = picUrl.split("/");
+	picArr[4] = "task";
+	var newPicArr = picArr.join("/");
+	$(this).attr('href',newPicArr);
+    });
+
+    $("#content .post .meta a").on("click",function(){
+    	$(this).attr("data-lightbox","roadtrip");
+    	$(this).siblings().each(function(){
+    		$(this).attr("data-lightbox","roadtrip");
+    	})
+    })
+
+    $("#msg").on("click",function(){
+    	$("#jq-dropdown-1").css('display','block');
+    });
+    $(".close_msg").on("click",function(){
+    	var a = $(this).data('id');
+    	$.post('/isRead/',{'account':a},function(ret){
+    			if(ret){
+    				$("#jq-dropdown-1").css('display','none');
+    				location.reload();
+    			}
+		},
+	"text");
+    	$("#unRead").css("display","block");
+    	$("#all").css("display","none");
+    });
+
+    $(".show_all").on("click",function(){
+    	$("#unRead").css("display","none");
+    	$("#all").css("display","block");
+    })
+});
+
+
+//不同状态显示不同颜色
+function setColor(){
+	$(".status").each(function(){
+		var content = $(this).data('id');
+		if(content == "未分配"){
+				$(this).css("color","gray");
+		}
+		if(content == "监测中"){
+			$(this).css({"color":"#238EC6","text-decoration":"blink"});
+		}
+		if(content == "已完结"){
+			$(this).css({"color":"green","text-decoration":"blink"});
+		}
+	})
+}
+
+function changeList(){
+	var opt = document.getElementById('option');
+	var content = document.getElementById('content');
+	var content_city = document.getElementById('content_city');
+	
+	if(opt){
+		if(opt.value == 'city'){
+			content.style.display = 'none';
+			content_city.style.display = '';		
+		}else{
+			content.style.display = '';
+			content_city.style.display = 'none';					
+		}
+	}	
+}
+// 上传竞价数据
+function prom(userAccount,taskName){
+	if(!userAccount){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: '请先登录，再接受任务',
+			});
+			return;
+	}
+	modal({
+					type: 'prompt',
+					title: '悬赏竞价',
+					text: '请输入你的竞价金额（单位:元）',
+					callback: function(result) {
+						var money=result;
+						var btn = $("#money");
+						$.post('/task_deliver/',{'account':userAccount,'taskName':taskName,'money':money},function(ret){
+							if(ret == 'taskOk'){
+								modal({
+									type: 'alert',
+									title: '提醒',
+									text: "任务接受成功！",
+									callback:function(){
+										location.reload();
+									}
+								});
+							}else if(ret == 'deliverOk'){
+								modal({
+									type: 'alert',
+									title: '提醒',
+									text: "竞价数据已提交！"
+								});
+							}else if(ret == 'moneyWrong'){
+								modal({
+									type: 'alert',
+									title: '提醒',
+									text: "没有足够的悬赏！"
+								});
+							}else{
+								modal({
+									type: 'alert',
+									title: '提醒',
+									text: "你已接受过该任务！"
+								});
+							}
+						
+						},
+					"text");
+					}
+	});
+		// var money = prompt("请输入您的金额需求","")
+}
+
+	// 退出任务
+	function task_out(userAccount,taskName){
+		$.post('/task_out/',{'account':userAccount,'taskName':taskName},function(ret){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: ret,
+				callback:function(){
+					location.reload();
+				}
+			});
+		},
+	"text");
+	}
+
+	// 完结任务
+	function task_over(taskName){
+		$.post('/task_over/',{'taskName':taskName},function(ret){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: ret,
+				callback:function(){
+					location.reload();
+				}
+			});
+		},
+	"text");
+	}
+
+	//mapApi
+    	function mapApi(ret,color,userName){
+    		if(ret){
+    					ret = JSON.parse(ret);
+					var point = [];
+					// map.clearOverlays();
+					var opts = {
+						width: 150,     // 信息窗口宽度
+						height: 100,     // 信息窗口高度
+						title: "位置信息"  // 信息窗口标题
+					};
+
+					//利用闭包，实现不同的点的鼠标点击监听事件
+					createMark = function(longitude,latitude,discoverTime){
+						var new_point = new BMap.Point(longitude,latitude);
+						var _marker = new BMap.Marker(new_point);  // 创建标注
+						if(color == "blue"){
+							var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(23, 25), {
+                       							 offset: new BMap.Size(10, 25), // 指定定位位置
+                        							imageOffset: new BMap.Size(0, 0 - 10* 25) // 设置图片偏移
+                    						});
+						}else if(color =='red'){
+							var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(23, 25), {
+                       							 offset: new BMap.Size(10, 25), // 指定定位位置
+                        							imageOffset: new BMap.Size(0, 0 - 11* 25) // 设置图片偏移
+                    						});
+						}
+						_marker.setIcon(myIcon);//设置标签的图标为自定义图标
+						map.addOverlay(_marker);              // 将标注添加到地图中
+						_marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+						map.panTo(new_point);
+
+
+						//信息标注
+						var gc = new BMap.Geocoder();
+						gc.getLocation(new_point, function(rs){
+							var addComp = rs.addressComponents;
+							var adr ="地址:"+addComp.province + addComp.city  + addComp.district + addComp.street + addComp.streetNumber;
+							// var time ="时间:"+"2005/01/12";
+							var info = adr+"<br/>"+'时间:'+discoverTime+"<br/>"+'对象:'+userName;
+							var infoWindow = new BMap.InfoWindow(info,opts);  // 创建信息窗口对象
+							_marker.openInfoWindow(infoWindow, map.getCenter());      // 打开信息窗口
+							_marker.addEventListener("click", function(){
+ 								 _marker.openInfoWindow(infoWindow, map.getCenter());      // 打开信息窗口
+ 							})
+						});
+						return _marker;
+					}
+
+					
+
+					//日期格式转换
+					var format = function(time, format){
+    						var t = new Date(time);
+    						var tf = function(i){return (i < 10 ? '0' : '') + i};
+    							return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
+        								switch(a){
+            									case 'yyyy':
+                									return tf(t.getFullYear());
+                									break;
+            									case 'MM':
+                									return tf(t.getMonth() + 1);
+                									break;
+            									case 'mm':
+                									return tf(t.getMinutes());
+                									break;
+            									case 'dd':
+                									return tf(t.getDate());
+                									break;
+            									case 'HH':
+                									return tf(t.getHours());
+                									break;
+            									case 'ss':
+                									return tf(t.getSeconds());
+                									break;
+        								}
+    							})
+					}
+
+
+					//循环处理所有点
+					for(var i=0;i<ret.length;i++){
+						var discovertime = ret[i].discovertime;
+						var num = i;
+						
+						$.ajax({
+							 url: "http://ditujiupian.com/service/api.ashx?key=d357ef7262e641c4b9c8bc5cd03976ff&type=wgs2bd&lng="+ret[i].longitude+"&lat="+ret[i].latitude,
+							 type:"GET",
+  							dataType: 'jsonp',
+  							// jsonp:'jsonpCallback',
+  							success: function(data){
+  								// alert(data.Lng+' '+data.Lat);
+
+  								 var date = JSON.stringify(discovertime);
+								var d = date.substr(9,13);
+								var time = (new Date(parseInt(d))).toLocaleString();
+						
+								if(data.Lng!==0 || data.Lat!==0){
+									point[i] = new BMap.Point(data.Lng,data.Lat);
+									var marker = createMark(data.Lng,data.Lat,time);
+						
+									// //连线
+									if(num>=1){
+										var polyline = new BMap.Polyline([
+											point[num],
+											point[num-1]
+							 			],
+							 			{strokeColor:color, strokeWeight:6, strokeOpacity:0.5}
+										);
+										map.addOverlay(polyline);
+									}
+								}
+  							}
+						})
+								
+					}		
+			}				
+	}
+
+					
+
+
+	//get user's upload message info
+	function showInfo(userName,taskName){
+		$.post('/showInfo/',{'userName':userName,'taskName':taskName},function(ret){
+			if(!ret.length){
+				mapApi(ret,'blue',userName);
+			}else{
+				modal({
+				type: 'alert',
+				title: '提醒',
+				text: "该用户暂未上传数据!",
+				callback:function(){
+					location.reload();
+				}
+				});
+			}
+			
+			// mapApi(ret,116.00500,40.36000,'blue',userName);		 
+		},
+	"text");
+		location.href = "#map";  //跳转到map
+	}
+
+	// 获取某任务的位置信息
+	function getLocation(taskName){
+		 $.post('/getLocation/',{'taskName':taskName},function(ret){
+		 	if(!ret.length){
+		 		mapApi(ret,'red','任务'+taskName+'的被搜寻者');
+		 	}else{
+		 		modal({
+				type: 'alert',
+				title: '提醒',
+				text: "暂无定位结果!",
+				callback:function(){
+					location.reload();
+				}
+				});
+		 	}	 
+		 },
+	 "text")
+	 	location.href = "#map";  //跳转到map
+	}
+
+	//clearMap()
+	function clearMap(map){
+		map.clearOverlays();
+	}
+	
+	//showUserPage
+	function showUserPage(account){
+		location.href = "/userPage/"+account;
+	}
+
+
+
+	
+</script>
+</head>
+
+<body onload="setColor();" >
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p ><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu">
+			<ul style="display:{{logout}}">
+				<li><a href="tasks/publish/{{user.account}}" class="first">发布任务</a></li>
+				<li class="current_page_item"><a href="friends/{{user.account}}">好友管理</a></li>
+				<li><a href="devices/{{user.account}}">设备管理</a></li>
+				<li><a href="personal_info/{{user.account}}">个人资料</a></li>
+				<li><a id="msg">消息栏</a></input><span class="msg_num">{{unReadNum}}</span></li>
+			</ul>
+		</div>
+		<!-- end #menu -->
+		<div id="search" >
+			<form method="get" action="">
+				<fieldset>
+				<input type="text" name="s" id="search-text" size="15" />
+				<input type="submit" id="search-submit" value="查询" />
+				</fieldset>
+			</form>
+		</div>
+		<div id="right">
+			<span class="items" style="display:{{view_info}}"><a href="/login" >登录</a></span>
+			<span class="items" style="display:{{view_info}}"><a href="/logon" >注册</a></span>
+			<span class="items" style="display:{{logout}}"><a href="/logout/{{user.account}}" >登出</a></span>
+			<span class="items" >
+				<span href="/" class="status">
+					<img src='{{user.picUrl}}' style="display:{{logout}}">
+					<img src='../static/images/default_user.jpg' style="display:{{view_info}}">
+					<span>{{user.nickname}}&nbsp{{info}}</span>
+				</span>
+				<div id="jq-dropdown-1" class="jq-dropdown jq-dropdown-tip" >
+    				<ul id="unRead" class="jq-dropdown-menu">
+    				{% for msg in user_msgs %}
+    					{% if not msg.is_read %}
+        					<li class="msg_content"><i class="icon-volume-up"></i>&nbsp{{msg.content}}</li>
+        					<li class="msg_time">{{msg.createTime|date:"Y-m-d H:i:s" }}</li>
+        					<li class="jq-dropdown-divider"></li>
+        					{% endif%}
+        				{% endfor %}
+        					<li class="show_all"  data-id="{{user.account}}"><a>显示所有消息</a></li>
+        					<li class="close_msg"  data-id="{{user.account}}"><i class="icon-remove" style="float: right;"></i></li>
+    				</ul>
+    				<ul id="all" class="jq-dropdown-menu">
+    				{% for msg in user_msgs %}
+        					<li class="msg_content"><i class="icon-volume-up"></i>&nbsp{{msg.content}}</li>
+        					<li class="msg_time">{{msg.createTime|date:"Y-m-d H:i:s" }}</li>
+        					<li class="jq-dropdown-divider"></li>
+        				{% endfor %}
+        					<li class="close_msg"  data-id="{{user.account}}"><i class="icon-remove" style="float: right;"></i></li>
+    				</ul>
+				</div>
+			</span>
+
+		</div>
+
+		<!-- end #search -->
+	</div>
+	<!-- end #header -->
+	<!-- end #header-wrapper -->
+	<div id="page" >
+		<select id="option" onchange="changeList();" >
+  			<option value ="all">全部</option>
+  			<option value ="city">同城</option>
+		</select>
+		
+		<div id="content">
+			{% for task in all_tasks %}
+			{% if task.publisher.account !=  user.account and task.status != '已完结' %}
+		   	<div class="post">
+				<h2 class="title"><a href="#">{{task.name}}</a></h2>
+				<div class="task_info">
+					<span>
+						<p class="meta">
+						{% for picture in task.picUrl%}
+						{% if not forloop.counter0 %}
+							<a id={{picture}} data-lightbox=""><img src={{picture}}></a>
+						{% else %}
+							<a id={{picture}} data-lightbox=""></a>
+						{% endif%}
+						{% endfor %}
+						</p>
+			    		</span>
+				<p class="meta">{{task.createTime|date:"Y-m-d H:i:s" }}</p>
+				<p class="meta">
+					<i class="icon-jpy">&nbsp悬赏总额</i>{{task.reward}}&nbsp&nbsp<i class="icon-jpy">&nbsp剩余悬赏</i>{{task.money_left}}
+				</p>
+				<p class="meta place"><i class="icon-home">&nbsp失踪地点</i>{{task.search_province}}{{task.search_city}}{{task.search_district}}{{task.search_street}}</p>
+				<p class="meta publish" onclick="showUserPage('{{task.publisher.account}}')"><i class="icon-male">&nbsp发布者</i>{{task.publisher.nickname}}</p>
+				<p class="meta"><i class="icon-phone">&nbsp联系电话</i>{{task.publisher.phone}}</p>
+				<p class="meta status" data-id="{{task.status}}"><i class="icon-bullhorn">&nbsp状态</i>{{task.status}}</p>
+				</div>
+
+				<div class="entry" >
+					<p>{{task.info}}</p>
+					<ul >
+						<li ><i class="icon-comment-alt"></i>评论</li>
+						<li class="items" ><i class="icon-share"></i>转发</li>
+						<li class="items" ><i class="icon-star-empty"></i>收藏</li>
+						<li class="items"  onclick="prom('{{user.account}}','{{task.name}}')">
+						<i class="icon-smile"></i>接受
+						</li>
+					</ul>
+				</div>
+		  	</div>
+			{% endif %}
+			{% endfor %}
+		</div><!-- end #content -->
+
+		<div id="content_city" >
+			{% for task in city_tasks %}
+			{% if task.publisher.account !=  user.account and task.status != '已完结'%}
+		   <div class="post">
+				<h2 class="title"><a href="#">{{task.name}}</a></h2>
+				<div class="task_info">
+					<span >
+						<p class="meta"><img src='{{task.picUrl}}' ></p>
+			    		</span>
+				<p class="meta">{{task.createTime|date:"Y-m-d H:i:s" }}</p>
+				<p class="meta">
+					<i class="icon-jpy">&nbsp悬赏总额</i>{{task.reward}}&nbsp&nbsp<i class="icon-jpy">&nbsp剩余悬赏</i>{{task.money_left}}
+				</p>
+				<p class="meta"><i class="icon-home">&nbsp失踪地点</i>{{task.search_province}}{{task.search_city}}{{task.search_district}}{{task.search_street}}</p>
+				<p class="meta publish" onclick="showUserPage('{{task.publisher.account}}')"><i class="icon-male">&nbsp发布者</i>{{task.publisher.nickname}}</p>
+				<p class="meta"><i class="icon-phone">&nbsp联系电话</i>{{task.publisher.phone}}</p>
+				<p class="meta status"><i class="icon-bullhorn">&nbsp状态</i>{{task.status}}</p>
+				</div>
+
+				<div class="entry" >
+					<p>{{task.info}}</p>
+					<ul >
+						<li ><i class="icon-comment-alt"></i>评论</li>
+						<li class="items" ><i class="icon-share"></i>转发</li>
+						<li class="items" ><i class="icon-star-empty"></i>收藏</li>
+						<li class="items"  onclick="prom('{{user.account}}','{{task.name}}')">
+						<i class="icon-smile"></i>接受
+						</li>
+					</ul>
+				</div>
+		  </div>
+			{% endif %}
+			{% endfor %}
+
+		</div><!-- end #content -->
+
+		<div id="sidebar">
+			<ul>
+				<li class="map" >
+					<a name="map"></a>
+					<h2>位置信息<span id="clear" onclick="clearMap(map)" >清理地图</span></h2>
+					<div id="allmap"></div>
+					<div id="r-result"></div>
+				</li>
+				<li id="my_publish">
+					<h2>我发布的 </h2>
+					<ul class="ul_list" >
+						{% for my_task in my_tasks %}
+						<li>
+								<h2 class="title">{{my_task.name}}</h2>
+							    	<span class="picture">
+									<p class="meta"><img src='{{my_task.picUrl}}' ></p>
+								</span>
+								<p class="meta">{{my_task.createTime |date:"Y-m-d H:i:s"}}</p>
+								<p class="meta">
+								<i class="icon-jpy">&nbsp悬赏总额</i>&nbsp{{my_task.reward}}&nbsp&nbsp<i class="icon-jpy">&nbsp剩余悬赏</i>&nbsp{{my_task.money_left}}
+								</p>
+								<p class="meta place"><i class="icon-home">&nbsp失踪地点</i>&nbsp&nbsp{{my_task.search_province}}{{my_task.search_city}}{{my_task.search_district}}{{my_task.search_street}}</p>
+								<p class="meta status" data-id="{{my_task.status}}"><i class="icon-bullhorn">&nbsp状态</i>&nbsp&nbsp{{my_task.status}}</p>
+								<p class="meta"><i class="icon-male">&nbsp参与者&nbsp</i>
+									{% if my_task.participates_name %}
+										<span>
+												{% for i in my_task.participates_name %}
+													<span class="join" onclick="showInfo('{{i}}','{{my_task.name}}')">{{i}}</span>
+												{% endfor %}
+										<span>
+										
+									{% else %}
+										<span class="meta">暂无</span>
+									{% endif %}
+								</p>
+								<div class="entry" >
+									<p>{{my_task.info}}</p>
+									<input id="task_over" type="button" value="完结任务" class="myButton" onclick="task_over('{{my_task.name}}')">
+									<input  type="button" class="myButton"  value="位置查询" onclick="getLocation('{{my_task.name}}')" />
+								</div>
+						</li>
+						{% endfor %}
+
+					</ul>
+				</li>
+				<li>
+					<h2>我参与的</h2>
+					<ul class="ul_list" >
+						{% for join_task in join_tasks %}
+						<li id="{{join_task.name}}">
+							<h2 class="title" >{{join_task.name}}</h2>
+							<span class="picture"><p class="meta"><img src='{{join_task.picUrl}}' ></p> </span>
+							<p class="meta">{{join_task.createTime|date:"Y-m-d H:i:s"}}</p>
+							<p class="meta"><i class="icon-jpy">&nbsp悬赏总额</i>&nbsp{{join_task.reward}}&nbsp&nbsp<i class="icon-jpy">&nbsp剩余悬赏</i>&nbsp{{join_task.money_left}}</p>
+							<p class="meta"><i class="icon-male">&nbsp发布者</i>&nbsp{{join_task.publisher_name}}</p>
+							<p class="meta place"><i class="icon-home">&nbsp失踪地点</i>&nbsp&nbsp{{join_task.search_province}}{{join_task.search_city}}{{join_task.search_district}}{{join_task.search_street}}</p>
+							<p class="meta status" data-id="{{join_task.status}}"><i class="icon-bullhorn">&nbsp状态</i>&nbsp&nbsp{{join_task.status}}</p>
+							<p class="meta"><i class="icon-male">&nbsp参与者&nbsp</i>
+										<span>
+												{% for i in join_task.participates_name %}
+													<span class="join" onclick="showInfo('{{i}}','{{join_task.name}}')">{{i}}</span>
+												{% endfor %}
+										<span>
+								
+							</p>
+							<div class="entry" >
+								<p>{{join_task.info}}</p>
+								<input  id="task_out" type="button" value="退出任务" class="myButton" onclick="task_out('{{user.account}}','{{join_task.name}}')">
+								<input type="button" class="myButton"  value="位置查询" onclick="getLocation('{{join_task.name}}')" />
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- end #sidebar -->
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #page -->
+	<div id="footer">
+	
+	</div>
+	{% load staticfiles %}
+	<script type="text/javascript" src="{% static 'lightbox.js' %}"></script>
+</body>
+</html>
+<script type="text/javascript">
+	var map = new BMap.Map("allmap");
+	map.centerAndZoom(new BMap.Point(116.331398,39.897445),16);
+	map.enableScrollWheelZoom(true);
+	
+</script>

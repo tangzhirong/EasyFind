@@ -1,0 +1,175 @@
+[INFO][redis_discover][2016-03-08 22:24:43,152]lastid:1
+[INFO][redis_discover][2016-03-08 22:24:43,155]lastid:1
+[INFO][redis_discover][2016-03-08 22:24:43,159]lastid:1
+[INFO][redis_discover][2016-03-08 22:24:43,163]lastid:1
+[INFO][redis_discover][2016-03-08 22:24:43,167]lastid:1
+[INFO][redis_discover][2016-03-08 22:31:49,987]lastid:2
+[INFO][redis_discover][2016-03-08 22:31:49,990]lastid:2
+[INFO][redis_discover][2016-03-08 22:31:49,993]lastid:2
+[INFO][redis_discover][2016-03-08 22:31:49,996]lastid:2
+[INFO][redis_discover][2016-03-08 22:31:49,999]lastid:2
+[INFO][redis_discover][2016-03-08 22:32:37,841]lastid:3
+[INFO][redis_discover][2016-03-08 22:32:37,845]lastid:3
+[INFO][redis_discover][2016-03-08 22:32:37,848]lastid:3
+[INFO][redis_discover][2016-03-08 22:32:37,851]lastid:3
+[INFO][redis_discover][2016-03-08 22:32:37,854]lastid:3
+[INFO][redis_discover][2016-03-08 22:36:51,237]lastid:4
+[INFO][redis_discover][2016-03-08 22:36:51,241]lastid:4
+[INFO][redis_discover][2016-03-08 22:36:51,245]lastid:4
+[INFO][redis_discover][2016-03-08 22:36:51,249]lastid:4
+[INFO][redis_discover][2016-03-08 22:36:51,253]lastid:4
+[INFO][redis_discover][2016-03-08 22:37:12,121]lastid:5
+[INFO][redis_discover][2016-03-08 22:37:12,125]lastid:5
+[INFO][redis_discover][2016-03-08 22:37:12,129]lastid:5
+[INFO][redis_discover][2016-03-08 22:37:12,132]lastid:5
+[INFO][redis_discover][2016-03-08 22:37:12,136]lastid:5
+[INFO][redis_discover][2016-03-08 22:37:29,135]lastid:6
+[INFO][redis_discover][2016-03-08 22:37:29,140]lastid:6
+[INFO][redis_discover][2016-03-08 22:37:29,144]lastid:6
+[INFO][redis_discover][2016-03-08 22:37:29,150]lastid:6
+[INFO][redis_discover][2016-03-08 22:37:29,155]lastid:6
+[INFO][redis_discover][2016-03-08 22:37:49,498]lastid:7
+[INFO][redis_discover][2016-03-08 22:37:49,499]enter redis_result...56d8e8727ee24d12289361b82015-11-11 12:12:20
+[INFO][redis_result][2016-03-08 22:37:49,500]id_list:  [b'7', b'6', b'5', b'4', b'3', b'2']
+[INFO][redis_result][2016-03-08 22:37:49,500]discovertime:2015-11-11 12:12:20
+[INFO][redis_result][2016-03-08 22:37:49,639]2000-01-01 00:00:00
+[INFO][redis_discover][2016-03-08 22:41:31,552]lastid:7
+[INFO][redis_discover][2016-03-08 22:41:31,557]lastid:7
+[INFO][redis_discover][2016-03-08 22:41:31,561]lastid:7
+[INFO][redis_discover][2016-03-08 22:41:31,565]lastid:7
+[INFO][redis_discover][2016-03-08 22:41:31,569]lastid:7
+[INFO][redis_discover][2016-03-08 22:41:39,124]lastid:8
+[INFO][redis_discover][2016-03-08 22:41:39,127]enter redis_result...56d8e8727ee24d12289361b82015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:41:39,129]id_list:  [b'8', b'7', b'6', b'5', b'4', b'3', b'2']
+[INFO][redis_result][2016-03-08 22:41:39,129]discovertime:2015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:41:39,131]2000-01-01 00:00:00
+[INFO][redis_discover][2016-03-08 22:45:03,864]lastid:8
+[INFO][redis_discover][2016-03-08 22:45:03,865]enter redis_result...56d8e8727ee24d12289361b82015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:03,866]id_list:  [b'8', b'7', b'6', b'5']
+[INFO][redis_result][2016-03-08 22:45:03,866]discovertime:2015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:03,868]2000-01-01 00:00:00
+[INFO][redis_result][2016-03-08 22:45:03,872]i:0 j:1discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:14  endtime:2015-11-11 12:12:17
+[INFO][redis_result][2016-03-08 22:45:03,872]i:0 j:2discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:03,872]i:0 j:3discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:03,872]count > 3
+[INFO][redis_result][2016-03-08 22:45:03,872]i:1 j:2discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:03,872]i:1 j:3discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:03,873]count > 3
+[INFO][redis_result][2016-03-08 22:45:03,873]i:2 j:3discovertime:b'2015-11-11 12:12:12' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:03,873]log testsetestst
+[INFO][redis_result][2016-03-08 22:45:03,873]task_discover_valid:[[{b'longitude': b'136', b'discovertime': b'2015-11-11 12:12:16', b'latitude': b'36', b'rssi': b'84', b'discover': b'12', b'distance': b'10.954787571223317'}, {b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}], [{b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}]]
+[INFO][redis_result][2016-03-08 22:45:03,873]2015-11-11 12:12:16 10.954787571223317 136 36
+[INFO][redis_result][2016-03-08 22:45:03,873]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:03,873]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:03,873]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:03,874]result discovertime:  2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:03,987]x:128.894929307  y:33.46532069111087
+[INFO][redis_result][2016-03-08 22:45:04,141]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,142]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,142]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,142]result discovertime:  2015-11-11 12:12:12
+[INFO][redis_result][2016-03-08 22:45:04,142]x:158.017010098  y:10.554202729406432
+[INFO][redis_discover][2016-03-08 22:45:04,171]lastid:8
+[INFO][redis_discover][2016-03-08 22:45:04,172]enter redis_result...56837a6e7ee24d129c515b1c2015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:04,174]id_list:  [b'8', b'7', b'6', b'5']
+[INFO][redis_result][2016-03-08 22:45:04,174]discovertime:2015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:04,176]2000-01-01 00:00:00
+[INFO][redis_result][2016-03-08 22:45:04,182]i:0 j:1discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:14  endtime:2015-11-11 12:12:17
+[INFO][redis_result][2016-03-08 22:45:04,182]i:0 j:2discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:04,183]i:0 j:3discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,183]count > 3
+[INFO][redis_result][2016-03-08 22:45:04,183]i:1 j:2discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:04,183]i:1 j:3discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,183]count > 3
+[INFO][redis_result][2016-03-08 22:45:04,183]i:2 j:3discovertime:b'2015-11-11 12:12:12' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,183]log testsetestst
+[INFO][redis_result][2016-03-08 22:45:04,183]task_discover_valid:[[{b'longitude': b'136', b'discovertime': b'2015-11-11 12:12:16', b'latitude': b'36', b'rssi': b'84', b'discover': b'12', b'distance': b'10.954787571223317'}, {b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}], [{b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}]]
+[INFO][redis_result][2016-03-08 22:45:04,184]2015-11-11 12:12:16 10.954787571223317 136 36
+[INFO][redis_result][2016-03-08 22:45:04,184]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,184]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,184]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,184]result discovertime:  2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,184]x:128.894929307  y:33.46532069111087
+[INFO][redis_result][2016-03-08 22:45:04,186]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,186]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,186]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,186]result discovertime:  2015-11-11 12:12:12
+[INFO][redis_result][2016-03-08 22:45:04,187]x:158.017010098  y:10.554202729406432
+[INFO][redis_discover][2016-03-08 22:45:04,191]lastid:8
+[INFO][redis_discover][2016-03-08 22:45:04,192]enter redis_result...56dec6627ee24d12107f62a12015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:04,194]id_list:  [b'8', b'7', b'6', b'5']
+[INFO][redis_result][2016-03-08 22:45:04,196]discovertime:2015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:04,198]2000-01-01 00:00:00
+[INFO][redis_result][2016-03-08 22:45:04,202]i:0 j:1discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:14  endtime:2015-11-11 12:12:17
+[INFO][redis_result][2016-03-08 22:45:04,202]i:0 j:2discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:04,202]i:0 j:3discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,202]count > 3
+[INFO][redis_result][2016-03-08 22:45:04,202]i:1 j:2discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:04,202]i:1 j:3discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,202]count > 3
+[INFO][redis_result][2016-03-08 22:45:04,203]i:2 j:3discovertime:b'2015-11-11 12:12:12' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,203]log testsetestst
+[INFO][redis_result][2016-03-08 22:45:04,203]task_discover_valid:[[{b'longitude': b'136', b'discovertime': b'2015-11-11 12:12:16', b'latitude': b'36', b'rssi': b'84', b'discover': b'12', b'distance': b'10.954787571223317'}, {b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}], [{b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}]]
+[INFO][redis_result][2016-03-08 22:45:04,203]2015-11-11 12:12:16 10.954787571223317 136 36
+[INFO][redis_result][2016-03-08 22:45:04,203]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,203]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,203]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,204]result discovertime:  2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,204]x:128.894929307  y:33.46532069111087
+[INFO][redis_result][2016-03-08 22:45:04,205]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,206]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,206]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,206]result discovertime:  2015-11-11 12:12:12
+[INFO][redis_result][2016-03-08 22:45:04,206]x:158.017010098  y:10.554202729406432
+[INFO][redis_discover][2016-03-08 22:45:04,210]lastid:8
+[INFO][redis_discover][2016-03-08 22:45:04,213]enter redis_result...56dec7df7ee24d12d4ebf1872015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:04,215]id_list:  [b'8', b'7', b'6', b'5']
+[INFO][redis_result][2016-03-08 22:45:04,215]discovertime:2015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:04,217]2000-01-01 00:00:00
+[INFO][redis_result][2016-03-08 22:45:04,220]i:0 j:1discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:14  endtime:2015-11-11 12:12:17
+[INFO][redis_result][2016-03-08 22:45:04,220]i:0 j:2discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:04,220]i:0 j:3discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,221]count > 3
+[INFO][redis_result][2016-03-08 22:45:04,221]i:1 j:2discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:04,221]i:1 j:3discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,221]count > 3
+[INFO][redis_result][2016-03-08 22:45:04,221]i:2 j:3discovertime:b'2015-11-11 12:12:12' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,221]log testsetestst
+[INFO][redis_result][2016-03-08 22:45:04,221]task_discover_valid:[[{b'longitude': b'136', b'discovertime': b'2015-11-11 12:12:16', b'latitude': b'36', b'rssi': b'84', b'discover': b'12', b'distance': b'10.954787571223317'}, {b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}], [{b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}]]
+[INFO][redis_result][2016-03-08 22:45:04,221]2015-11-11 12:12:16 10.954787571223317 136 36
+[INFO][redis_result][2016-03-08 22:45:04,222]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,222]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,222]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,222]result discovertime:  2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,222]x:128.894929307  y:33.46532069111087
+[INFO][redis_result][2016-03-08 22:45:04,224]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,224]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,224]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,224]result discovertime:  2015-11-11 12:12:12
+[INFO][redis_result][2016-03-08 22:45:04,225]x:158.017010098  y:10.554202729406432
+[INFO][redis_discover][2016-03-08 22:45:04,230]lastid:8
+[INFO][redis_discover][2016-03-08 22:45:04,231]enter redis_result...56d8e8a17ee24d189c4506962015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:04,233]id_list:  [b'8', b'7', b'6', b'5']
+[INFO][redis_result][2016-03-08 22:45:04,233]discovertime:2015-11-11 12:12:26
+[INFO][redis_result][2016-03-08 22:45:04,235]2000-01-01 00:00:00
+[INFO][redis_result][2016-03-08 22:45:04,238]i:0 j:1discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:14  endtime:2015-11-11 12:12:17
+[INFO][redis_result][2016-03-08 22:45:04,238]i:0 j:2discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:04,239]i:0 j:3discovertime:b'2015-11-11 12:12:16' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,239]count > 3
+[INFO][redis_result][2016-03-08 22:45:04,239]i:1 j:2discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:12  endtime:2015-11-11 12:12:15
+[INFO][redis_result][2016-03-08 22:45:04,239]i:1 j:3discovertime:b'2015-11-11 12:12:14' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,239]count > 3
+[INFO][redis_result][2016-03-08 22:45:04,239]i:2 j:3discovertime:b'2015-11-11 12:12:12' starttime:2015-11-11 12:12:10  endtime:2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,240]log testsetestst
+[INFO][redis_result][2016-03-08 22:45:04,240]task_discover_valid:[[{b'longitude': b'136', b'discovertime': b'2015-11-11 12:12:16', b'latitude': b'36', b'rssi': b'84', b'discover': b'12', b'distance': b'10.954787571223317'}, {b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}], [{b'longitude': b'130', b'discovertime': b'2015-11-11 12:12:14', b'latitude': b'40', b'rssi': b'90', b'discover': b'12', b'distance': b'21.708692319540624'}, {b'longitude': b'123', b'discovertime': b'2015-11-11 12:12:12', b'latitude': b'34', b'rssi': b'82', b'discover': b'12', b'distance': b'8.721557721439984'}, {b'longitude': b'120', b'discovertime': b'2015-11-11 12:12:10', b'latitude': b'30', b'rssi': b'80', b'discover': b'12', b'distance': b'6.943591429214287'}]]
+[INFO][redis_result][2016-03-08 22:45:04,240]2015-11-11 12:12:16 10.954787571223317 136 36
+[INFO][redis_result][2016-03-08 22:45:04,240]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,240]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,240]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,240]result discovertime:  2015-11-11 12:12:13
+[INFO][redis_result][2016-03-08 22:45:04,241]x:128.894929307  y:33.46532069111087
+[INFO][redis_result][2016-03-08 22:45:04,243]2015-11-11 12:12:14 21.708692319540624 130 40
+[INFO][redis_result][2016-03-08 22:45:04,244]2015-11-11 12:12:12 8.721557721439984 123 34
+[INFO][redis_result][2016-03-08 22:45:04,244]2015-11-11 12:12:10 6.943591429214287 120 30
+[INFO][redis_result][2016-03-08 22:45:04,244]result discovertime:  2015-11-11 12:12:12
+[INFO][redis_result][2016-03-08 22:45:04,245]x:158.017010098  y:10.554202729406432

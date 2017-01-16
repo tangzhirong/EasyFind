@@ -1,0 +1,50 @@
+[2016-03-30 17:15:25 +0800] [5224] [INFO] Starting gunicorn 19.4.5
+[2016-03-30 17:15:25 +0800] [5224] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2016-03-30 17:15:25 +0800] [5224] [ERROR] Retrying in 1 second.
+[2016-03-30 17:15:26 +0800] [5224] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2016-03-30 17:15:26 +0800] [5224] [ERROR] Retrying in 1 second.
+[2016-03-30 17:15:27 +0800] [5224] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2016-03-30 17:15:27 +0800] [5224] [ERROR] Retrying in 1 second.
+[2016-03-30 17:15:28 +0800] [5224] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2016-03-30 17:15:28 +0800] [5224] [ERROR] Retrying in 1 second.
+[2016-03-30 17:15:29 +0800] [5224] [ERROR] Connection in use: ('0.0.0.0', 8000)
+[2016-03-30 17:15:29 +0800] [5224] [ERROR] Retrying in 1 second.
+[2016-03-30 17:15:30 +0800] [5224] [ERROR] Can't connect to ('0.0.0.0', 8000)
+2016/06/01 16:56:03 [alert] 1937#0: 768 worker_connections are not enough
+2016/06/01 16:56:03 [error] 1937#0: *765 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/02 13:15:13 [alert] 1372#0: 768 worker_connections are not enough
+2016/06/02 13:15:13 [error] 1372#0: *765 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/02 13:49:53 [alert] 1372#0: 768 worker_connections are not enough
+2016/06/02 13:49:53 [error] 1372#0: *1531 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /manager/html HTTP/1.0", upstream: "http://127.0.0.1:8000/manager/html", host: "127.0.0.1:8000"
+2016/06/02 14:05:37 [alert] 1372#0: 768 worker_connections are not enough
+2016/06/02 14:05:37 [error] 1372#0: *2297 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /manager/html HTTP/1.0", upstream: "http://127.0.0.1:8000/manager/html", host: "127.0.0.1:8000"
+2016/06/02 15:01:05 [alert] 1372#0: 768 worker_connections are not enough
+2016/06/02 15:01:05 [error] 1372#0: *3063 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/06 13:59:55 [alert] 5602#0: 768 worker_connections are not enough
+2016/06/06 13:59:55 [error] 5602#0: *765 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.0", upstream: "http://127.0.0.1:8000/", host: "127.0.0.1:8000"
+2016/06/06 15:51:23 [alert] 5602#0: 768 worker_connections are not enough
+2016/06/06 15:51:23 [error] 5602#0: *1531 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/06 16:21:00 [alert] 5602#0: 768 worker_connections are not enough
+2016/06/06 16:21:00 [error] 5602#0: *2297 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/06 19:56:14 [alert] 5602#0: 768 worker_connections are not enough
+2016/06/06 19:56:14 [error] 5602#0: *3063 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/06 22:50:58 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/06 22:50:58 [error] 5600#0: *3831 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/06 23:56:30 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/06 23:56:30 [error] 5600#0: *4597 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/07 03:53:48 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/07 03:53:48 [error] 5600#0: *5363 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/07 05:20:09 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/07 05:20:09 [error] 5600#0: *6129 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/07 07:55:29 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/07 07:55:29 [error] 5600#0: *6896 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/07 07:55:33 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/07 07:55:33 [error] 5600#0: *7662 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.0", upstream: "http://127.0.0.1:8000/", host: "127.0.0.1:8000"
+2016/06/07 08:23:00 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/07 08:23:00 [error] 5600#0: *8429 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.0", upstream: "http://127.0.0.1:8000/", host: "127.0.0.1:8000"
+2016/06/07 11:45:55 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/07 11:45:55 [error] 5600#0: *9195 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/07 11:58:51 [alert] 5600#0: 768 worker_connections are not enough
+2016/06/07 11:58:51 [error] 5600#0: *9961 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"
+2016/06/07 16:03:00 [alert] 5601#0: 768 worker_connections are not enough
+2016/06/07 16:03:00 [error] 5601#0: *10727 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 127.0.0.1, server: localhost, request: "GET /cache/global/img/gs.gif HTTP/1.0", upstream: "http://127.0.0.1:8000/cache/global/img/gs.gif", host: "127.0.0.1:8000"

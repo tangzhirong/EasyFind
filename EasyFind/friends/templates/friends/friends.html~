@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : The Fences
+Description: A two-column, fixed-width design for 1024x768 screen resolutions.
+Version    : 1.0
+Released   : 20100308
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>泛搜索|{{person.nickname}}</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+<!-- 引入jquery、csrf防范脚本 -->
+<script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'csrf.js' %}"></script>
+<!-- 删除好友 -->
+<script type="text/javascript">
+	function remove(user,friend){
+		$.post('/remove/',{'user':user,'friend':friend},function(data){
+			alert(data);
+		})
+	}
+</script>
+</head>
+<body style="background-color:rgb(49,159,220)">
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p style="margin-top:5px;font-size:15px"><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu" style="margin-top:5px">
+			<ul>
+				<li><a href="/{{person.account}}" class="first" style="height:40px;font-size:20px">返回主页</a></li>
+			</ul>
+		</div>
+		<!-- end #menu -->
+
+		<!-- end #search -->
+	</div>
+	<!-- end #header -->
+	<!-- end #header-wrapper -->
+	<!-- <div id="page" >
+		<div id="content" style="font-family: Arial, Helvetica, sans-serif;font-size: 18px;font-weight: normal;">
+			<form method='post' >
+						 {% csrf_token %}
+						 <div class="form-group"><tr><th><label for="id_account">搜索用户名</label></th>
+							 <td><input id="id_account" class="form-control" name="account" type="text" style="width:30%"/></td>
+						 </tr>
+					 </div>
+					 <input type="submit" value="添加好友" class="btn btn-primary">
+			</form>
+
+			<div class="form-group" style="margin-top:20px;width:30%">
+			 <tr><th><label for="id_name">我的好友</label></th></tr>
+			 <ul class="list-group">
+				 {% for friend in friends %}
+				 <li class="list-group-item" style="height:50px;padding-top:5px">
+					 <span>{{friend.nickname}}</span>
+					 <button class="btn btn-primary" style="float:right;margin-top:3px" onclick="remove('{{person.account}}','{{friend.account}}')">删除</button></li>
+				 {% endfor %}
+			 </ul>
+	 </div>
+		</div>
+		<div style="clear: both;">&nbsp;</div>
+	</div> -->
+
+	<div class="register-container container" style='background-color:rgb(49,159,220)' >
+							<div class="row">
+									<div class="iphone span5" style="float:left;margin-left:-500px;margin-top:20px">
+											<img src="../../../static/images/iphone.png" alt="" style="margin-top:100px">
+									</div>
+									<div class="register span6" style='float:left;width:30%;margin-top:50px;margin-right:20px;    position: absolute;
+    left: 800px;
+    top: 250px;
+' >
+										<form action="" method="post" enctype="multipart/form-data">
+											{% csrf_token %}
+											<h2>搜索好友</h2>
+												<label for="id_name">搜索用户名</label>
+												<input type="text" id="id_account"  name="account" class="form-control" >
+
+												<button type="submit" >添加</button>
+										</form>
+
+										<form action=""  enctype="multipart/form-data" style="margin-top:20px">
+
+											<h2>我的好友</h2>
+											<ul style="list-style-type:none">
+											 {% for friend in friends %}
+											 <li style="margin-bottom:5px;padding-bottom:10px;border-bottom:1px solid #888">
+												 <img src='data:image/png;base64,{{friend.picUrl}}' style="width:60px;height:60px;margin-right:10px;">
+												 <div style="display:inline-block;position:relative;top:15px">
+													 <div style="color:#333;font-weight: 700;">{{friend.nickname}}</div>
+													 <div style="color:#808080;">{{friend.province}}&nbsp&nbsp{{friend.city}}</div>
+												 </div>
+
+												</li>
+											 {% endfor %}
+										 </ul>
+
+
+										</form>
+
+
+
+
+
+									</div>
+							</div>
+					</div>
+	<!-- end #page -->
+	<div id="footer">
+
+	</div>
+	<!-- end #footer -->
+</body>
+</html>

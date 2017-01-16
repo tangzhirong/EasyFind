@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'echarts.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+         myChart.showLoading({  
+                text : "图表数据正在努力加载..."  
+            });  
+         var date = [];
+         var data = [];
+        // 指定图表的配置项和数据
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                formatter: function (params) {
+                   console.log(params);
+                    return params[0].name+":"+params[0].value;
+                },
+                axisPointer: {
+                    animation: false
+                }
+             },
+                xAxis:{
+                    type: 'category',
+                    boundaryGap: false,
+                    data: date
+                },
+                yAxis: {
+                    boundaryGap: [0, '50%'],
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name:'rate',
+                        type:'line',
+                        smooth:true,
+                        symbol: 'none',
+                        stack: 'a',
+                        areaStyle: {
+                            normal: {}
+                        },
+                        data: data
+                    }
+                ]
+            };
+
+myChart.setOption(option);  
+getChartData();
+setInterval(function(){
+    getChartData();
+}, 30000);
+
+function getChartData() {  
+            //获得图表的options对象  
+            var options = myChart.getOption();  
+            //通过Ajax获取数据  
+            $.ajax({  
+                type : "get",  
+                async : true,  
+                url : "/showSystemIndex/",  
+                data : {},  
+                dataType : "json", //返回数据形式为json  
+                success : function(result) {  
+                    if (result) {  
+                        var len = result.length;
+                        var  time= JSON.stringify(result[len-1].time);
+                        var d = time.substr(9,13);
+                        var ti = (new Date(parseInt(d))).toLocaleString();
+                        data.push(result[len-1].taskFinishedRate);
+                        date.push(ti);
+
+                        myChart.hideLoading();  
+                        myChart.setOption({
+                            title: {
+                                text: '动态数据 - 系统任务完成率'
+                            },
+                            xAxis:{
+                                data:date
+                            },
+                           series: [
+                                        {
+                                            name:'rate',
+                                            type:'line',
+                                            smooth:true,
+                                            symbol: 'none',
+                                            stack: 'a',
+                                            areaStyle: {
+                                                normal: {}
+                                            },
+                                            data: data
+                                        }
+                                    ]
+                        });  
+                    
+                    }  
+                },  
+                error : function(errorMsg) {  
+                    alert("不好意思，大爷，图表请求数据失败啦!");  
+                    myChart.hideLoading();  
+                }  
+            });  
+}  
+
+
+
+</script>
+</body>
+</html>

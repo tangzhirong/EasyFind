@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+<link href="{% static 'login.css' %}" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="{% static 'city-picker-master/jquery-1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'city-picker-master/city-picker.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/Font-Awesome-3.2.1/css/font-awesome.min.css' %}" media="screen" />
+<script type="application/x-javascript">
+	/*addEventListener("load", function() {
+		 setTimeout(hideURLbar, 0);
+	 }, false);
+	function hideURLbar(){
+				  window.scrollTo(0,1);
+	}*/
+	window.onload = function(){
+		var inputs = document.getElementsByTagName('input');
+		for(var i=0,len=inputs.length;i<len;i++){
+			inputs[i].onblur = function(){
+				checkFormat(this);
+			}
+		}
+	}
+
+	function checkFormat(input){
+		var ok = input.nextSibling.nextSibling;
+		var wrong = ok.nextSibling;
+		var type = input.id;
+		var text = input.value;
+		switch(type){
+			case 'id_account':
+				var length = getLength(text);
+				if((length>=0 &&length<6) ||length>16){
+					wrong.style.display='inline-block';
+					ok.style.dispaly='none';
+				}else{
+					ok.style.display='inline-block';
+					wrong.style.dispaly='none';
+				}
+				break;
+			case 'id_password':
+				var length = getLength(text);
+                                if((length>=0 &&length<6) ||length>20){
+                                        wrong.style.display='inline-block';
+					ok.style.display='none';
+                                }else{
+                                        ok.style.display='inline-block';
+					wrong.style.display='none';
+                                }
+                                break;
+
+			case 'id_nickname':
+				var length = getLength(text);
+                                if((length>=0 &&length<2) ||length>12){
+                                        wrong.style.display='inline-block';
+					ok.style.display='none';
+                                }else{
+                                        ok.style.display='inline-block';
+					wrong.style.display='none';
+                                }
+                                break;
+
+			case 'id_phone':
+				if(text.match(/^1\d{10}$/)){
+					ok.style.display='inline-block';
+					wrong.style.display='none';
+				}else{
+					wrong.style.display='inline-block';
+					ok.style.display='none';
+				}
+				break;
+			/*case 'id_email':
+				var reg = new RegExp('^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$','i');
+				if(text.match(reg)){
+					ok.style.display='inline-block';
+					wrong.style.display='none';
+				}else{
+					wrong.style.display='inline-block';
+					ok.style.display='none';
+				}
+				break;*/
+			default:
+
+		}
+	}
+
+	function getLength(text){
+		var len =0;
+		for(var i=0;i<text.length;i++){
+			var charCode = text.charCodeAt(i);
+			if(charCode >=0 && charCode<=128){
+				len+=1;
+			}else{
+				len+=2;
+			}
+		}
+		return len;
+	}
+</script>
+</head>
+
+<body style="background-color: rgb(49,159,220);font-size: 15px">
+<div id="logo">
+    <h1>EasyFind</h1>
+    <p style="margin-top:5px;font-size:15px"><em>all to participate,easy to find</em></p>
+  </div>
+  <div id="header" style="margin-left: 271px;">
+    <div id="menu">
+      <ul>
+        <li><a class="first">关于我们</a></li>
+        <li class="current_page_item"><a>联系我们</a></li>
+      </ul>
+    </div>
+    </div>
+	<div class="main" style="margin-top: 35px">
+		<div class="login">
+			<div class="inset">
+				<!-----start-main---->
+				
+        <form method='post' style="max-width:500px" enctype="multipart/form-data" role="form">
+          {% csrf_token %}
+          <!-- {% for field in form %}
+          <div>{{field}}{{field.errors}}</div>
+          {%endfor%} -->
+		<div class="city-picker">
+        <tr><th><label for="id_account" class="icon-user">&nbsp&nbsp账号</label>
+        </th><td>
+        <input id="id_account" name="account" type="text" placeholder="长度为6-16个字符"></input>
+        </td><td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove"  style="display:none;"></i></td></tr>
+        <tr><th><label for="id_password" class="icon-lock" style="display: block">&nbsp&nbsp密码</label>
+        </th><td>
+        <input id="id_password" name="password" class="password" type="password" placeholder="长度为6-20个字符" />
+        </td><td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove" style="display:none;"></i></td></tr>
+       
+        <tr><th><label for="id_gender" class="icon-user-md" style="display: block">&nbsp&nbsp性别</label></th><td><div style='width:30%'><select id="id_gender" class="form-control" name="gender" type="text"/>
+					<option value="男" >男</option>
+					<option value="女" >女</option>
+				</select></div></td></tr>
+        <tr><th><label for="id_nickname" class="icon-tags" style="display: block">&nbsp&nbsp昵称</label></th><td>
+        <input id="id_nickname" name="nickname" class="nickname" type="text" placeholder="长度为2-12个字符"></i>
+        </td><td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove" style="display:none;"></i></td></tr>
+				<tr><th><label for="id_picture" class="icon-github-alt" style="display: block;margin-bottom: 10px">&nbsp&nbsp头像</label></th><td>
+				<input id="id_picture" class="picture" name="picture" type="file"/></td></tr>
+        <tr><th><label for="id_phone" class="icon-phone" style="display: block;margin-top: 15px;">&nbsp&nbsp手机</label></th><td>
+        <input id="id_phone" name="phone" class="phone" type="text" placeholder="请输入真实手机号码" />
+        </td><td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove" style="display:none;"></i></td></tr>
+				<tr><th><label for="id_email" class="icon-envelope" style="display: block;margin-bottom: 10px">&nbsp&nbsp邮箱</label></th><td>{{form.email}}</td><td><i class="icon-ok" style="display:none;"></i></td><td><i class="icon-remove"  style="display:none;"></i></td></tr>
+				<div class="form-group"><tr><th><label style="font-weight: normal;display: block;margin-top: 10px" class="icon-globe">&nbsp&nbsp地区</label></th><td><div style="width:50%"><select class="region form-control" style="padding: 0"></select></div></td></tr></div>
+				<div class="form-group"><tr><th><label style="font-weight: normal;display: block;" for="id_province" class="icon-home">&nbsp&nbsp省份</label></th><td><div style="width:50%"><select id="id_province" class="form-control province" name="province" type="text" style="padding: 0" /></select></div></td></tr></div>
+				<div class="form-group"><tr><th><label style="font-weight: normal;display: block;" for="id_city" class="icon-road">&nbsp&nbsp城市</label></th><td><div style="width:50%"><select id="id_city" name="city" class="form-control city" type="text" style="padding: 0" /></select></div></td></tr></div>
+				
+			</div>
+				<script type="text/javascript">
+				    $('.city-picker').cityPicker({
+				        required: true
+				    });
+				</script>
+        <div class="sign">
+          <div class="submit" style="margin-bottom:20px">
+          <input type="submit" value="注册" >
+          <a href="/">取消</a>
+        </div>
+        <div class="clear" style="margin-left:10px;color:red;font-size:15px">{{res}} </div>
+    </div> 
+     
+      </form>
+				</div>
+			</div>
+		<!-----//end-main---->
+		</div>
+		 <!-----start-copyright---->
+   					<div class="copy-right">
+					</div>
+				<!-----//end-copyright---->
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>泛搜索</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+{% load staticfiles %}
+<link href="{% static 'jquery.modal.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-xenon.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-atlant.css' %}" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery.modal.min.js' %}"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		var tag = {{tag|safe}};
+		if(tag == 'ok'){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: '设备添加成功!',
+				callback:function(){
+					location.href = '';
+				}
+			});
+		}else if(tag == 'no'){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: '设备添加失败!',
+				callback:function(){
+					location.href = '';
+				}
+			});
+		}
+	}
+</script>
+</head>
+<body>
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu">
+			<ul>
+				<li><a href="/{{person.account}}" class="first" >返回主页</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="register-container container" >
+		<div class="row">
+			<div class="iphone span5" >
+				<img src="../../../static/images/iphone.png" alt="">
+			</div>
+			
+			<div class="register span6 device_register" >
+
+				<form action="" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h2>添加设备</h2>
+					<label for="id_name">设备名称</label>
+					<input type="text" id="id_name"  name="name" >
+					<label for="id_uuid">设备uuid</label>
+					<input type="text" id="id_uuid"  name="uuid" >
+					<button type="submit" >添加</button>
+				</form>
+											
+				<form action="" method="post" enctype="multipart/form-data" class="device_list" >
+					{% csrf_token %}
+					<h2>我的设备</h2>
+					<select class="form-control" id="myDevice"/>
+						{% for device in devices %}
+							<option>{{device.name}}</option>
+						{% endfor %}
+					</select>
+					<button type="submit" >删除</button>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<!-- end #page -->
+	<div id="footer"></div>
+	<!-- end #footer -->
+</body>
+</html>

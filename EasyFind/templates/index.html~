@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<title>泛搜索|{{user.nickname}}</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=iyPuuhgLuXn9kgnqiyC32m6Z"></script>
+<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+<style type="text/css">
+	#allmap {width: 100%;height: 90%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	#r-result{width:100%; font-size:14px;}
+	#menu ul li a:hover{
+		text-decoration: underline;
+		color: #eb7350;
+		cursor: pointer;
+	}
+  #header #right span a:hover{
+		text-decoration: underline;
+		color: #eb7350;
+		cursor: pointer;
+	}
+	#page #content .post .entry ul li:hover{
+		color: #eb7350;
+		cursor: pointer;
+	}
+	img{
+		border:1px solid #f2f2f5;
+	}
+	</style>
+
+{% load staticfiles %}
+<link href="{% static 'jquery.modal.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-xenon.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-atlant.css' %}" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'csrf.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery.modal.min.js' %}"></script>
+<script src="{% static 'ws4redis.js'%}" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+//websocket
+
+
+jQuery(document).ready(function($) {
+    var ws4redis = WS4Redis({
+        uri: 'ws://127.0.0.1:8000/ws/foobar?',
+        receive_message: receiveMessage,
+        heartbeat_msg:"--heartbeat--"
+    });
+
+    // attach this function to an event handler on your site
+    //function sendMessage() {
+    //    ws4redis.send_message('A message');
+    //}
+
+    //function on_connected() {
+    //    ws4redis.send_message('Hello');
+    //}
+
+    // receive a message though the websocket from the server
+    function receiveMessage(msg) {
+        alert('Message from Websocket: ' + msg);
+    }
+});
+
+/**
+$().ready(function() {
+	var source = new EventSource('/stream1/'); // of course this must match the endpoint in your urlconf
+  	alert(source);
+	function log() {
+		console.log(arguments);
+	}
+
+	source.onopen = function() {
+		alert("open");
+		console.log(arguments);
+	};
+
+	source.onerror = function () {
+		alert("wrong");
+		console.log(arguments);
+	};
+	
+        source.onmessage = function(message){
+		alert(message.data);
+	}
+	source.addEventListener('connections', log, false);
+	source.addEventListener('requests', log, false);
+	source.addEventListener('myevent', function(e) {
+		//data = JSON.parse(e.data);
+		alert(e);
+	}, false);
+	source.addEventListener('uptime', log, false);
+
+});
+*////
+//不同状态显示不同颜色
+function setColor(){
+	$(".status").each(function(){
+		var content = $(this).text();
+		if(content == "状态：未分配"){
+				$(this).css("color","gray");
+		}
+		if(content == "状态：监测中"){
+			$(this).css({"color":"#238EC6","text-decoration":"blink"});
+		}
+	})
+}
+// 上传竞价数据
+	function prom(userAccount,taskName){
+		if(!userAccount){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: '请先登录，再接受任务',
+			});
+			return;
+		}
+		modal({
+					type: 'prompt',
+					title: '悬赏竞价',
+					text: '请输入你的竞价金额（单位:元）',
+					callback: function(result) {
+						var money=result;
+						var btn = $("#money");
+						$.post('/task_deliver/',{'account':userAccount,'taskName':taskName,'money':money},function(ret){
+							if(ret == 'taskOk'){
+								modal({
+									type: 'alert',
+									title: '提醒',
+									text: "任务接受成功！"
+								});
+							}else if(ret == 'deliverOk'){
+								modal({
+									type: 'alert',
+									title: '提醒',
+									text: "竞价数据已提交！"
+								});
+							}else if(ret == 'moneyWrong'){
+								modal({
+									type: 'alert',
+									title: '提醒',
+									text: "没有足够的悬赏！"
+								});
+							}else{
+								modal({
+									type: 'alert',
+									title: '提醒',
+									text: "你已接受过该任务！"
+								});
+							}
+						},
+					"text");
+					}
+				});
+		// var money = prompt("请输入您的金额需求","");
+
+	}
+
+	// 退出任务
+	function task_out(userAccount,taskName){
+		$.post('/task_out/',{'account':userAccount,'taskName':taskName},function(ret){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: ret
+			});
+		},
+	"text");
+	}
+
+	// 完结任务
+	function task_over(taskName){
+		$.post('/task_over/',{'taskName':taskName},function(ret){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: ret
+			});
+		},
+	"text")
+	}
+
+	// 获取某任务的位置信息
+	function getLocation(taskName){
+		 $.post('/getLocation/',{'taskName':taskName},function(ret){
+			  if(ret){
+					var point = [];
+					map.clearOverlays();
+					var opts = {
+						width: 150,     // 信息窗口宽度
+						height: 100,     // 信息窗口高度
+						title: "位置信息"  // 信息窗口标题
+					};
+
+					//利用闭包，实现不同的点的鼠标点击监听事件
+					createMark = function(longitude,latitude,discoverTime){
+						var new_point = new BMap.Point(longitude,latitude);
+						var _marker = new BMap.Marker(new_point);  // 创建标注
+						map.addOverlay(_marker);              // 将标注添加到地图中
+						_marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+						map.panTo(new_point);
+
+
+						//信息标注
+						var gc = new BMap.Geocoder();
+						gc.getLocation(new_point, function(rs){
+							var addComp = rs.addressComponents;
+							var adr ="地址:"+addComp.province + addComp.city  + addComp.district + addComp.street + addComp.streetNumber;
+							var time ="时间:"+"2005/01/12";
+							var info = adr+"<br/>"+discoverTime;
+							var infoWindow = new BMap.InfoWindow(info,opts);  // 创建信息窗口对象
+							map.openInfoWindow(infoWindow, map.getCenter());      // 打开信息窗口
+							_marker.addEventListener("click", function(){
+ 							 _marker.openInfoWindow(infoWindow, map.getCenter());      // 打开信息窗口
+ 						})
+						});
+						return _marker;
+					}
+						//日期格式转换
+						var format = function(time, format){
+    							var t = new Date(time);
+    							var tf = function(i){return (i < 10 ? '0' : '') + i};
+    							return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
+        					switch(a){
+            					case 'yyyy':
+                					return tf(t.getFullYear());
+                					break;
+            					case 'MM':
+                					return tf(t.getMonth() + 1);
+                					break;
+            					case 'mm':
+                					return tf(t.getMinutes());
+                					break;
+            					case 'dd':
+                					return tf(t.getDate());
+                					break;
+            					case 'HH':
+                					return tf(t.getHours());
+                					break;
+            					case 'ss':
+                					return tf(t.getSeconds());
+                					break;
+        					}
+    				})
+					}
+
+					//循环处理所有点
+					for(var i=0;i<ret.length;i++){
+						var date = JSON.stringify(ret[i].discoverTime);
+						var d = date.substr(9,13);
+						var time = (new Date(parseInt(d))).toLocaleString();
+						var discover_time = format(time,'yyyy-MM-dd HH:mm:ss');
+
+						point[i] = new BMap.Point(ret[i].longitude,ret[i].latitude);
+						var marker = createMark(ret[i].longitude,ret[i].latitude,discover_time);
+						//连线
+						if(i>=1){
+							var polyline = new BMap.Polyline([
+								point[i],
+								point[i-1]
+							 ],
+							 {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5}
+							);
+							map.addOverlay(polyline);
+						}
+					}
+				}
+		 },
+	 "json")
+	 	location.href = "#map";  //跳转到map
+	}
+</script>
+</head>
+
+<body onload="setColor();" style="background-color:rgb(49,159,220)">
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p style="margin-top:5px;font-size:15px"><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu">
+			<ul style="display:{{logout}}">
+				<li><a href="tasks/publish/{{user.account}}" class="first">发布任务</a></li>
+				<li class="current_page_item"><a href="friends/{{user.account}}">好友管理</a></li>
+				<li><a href="devices/{{user.account}}">设备管理</a></li>
+				<li><a href="personal_info/{{user.account}}">个人资料</a></li>
+			</ul>
+		</div>
+		<!-- end #menu -->
+		<div id="search" style="margin-bottom:20px">
+			<form method="get" action="">
+				<fieldset>
+				<input type="text" name="s" id="search-text" size="15" />
+				<input type="submit" id="search-submit" value="查询" />
+				</fieldset>
+			</form>
+		</div>
+		<div id="right" style="display:inline-block;position: relative;bottom: 20px;">
+			<span style="margin:10px;font-size:15px;position:relative;bottom:5px;display:{{view_info}}"><a href="/login" style="text-decoration:none;color:#515F6B">登录</a></span>
+			<span style="margin:10px;font-size:15px;position:relative;bottom:5px;display:{{view_info}}"><a href="/logon" style="text-decoration:none;color:#515F6B">注册</a></span>
+			<span style="margin:10px;font-size:15px;position:relative;bottom:5px;display:{{logout}}"><a href="/logout" style="text-decoration:none;color:#515F6B">登出</a></span>
+			<span style="margin:10px;font-size:15px;position:relative;bottom:5px">
+				<a href="/" style="text-decoration:none;color:blue">
+					<img src='data:image/png;base64,{{user.picUrl}}' style="width:40px;height:40px;position: relative;top: 15px;margin-right:10px;display:{{logout}}">
+					<img src='../static/images/default_user.jpg' style="width:40px;height:40px;position: relative;top: 15px;margin-right:10px;display:{{view_info}}">
+					<span>{{user.nickname}}&nbsp{{info}}</span>
+
+
+				</a>
+		</span>
+
+		</div>
+
+		<!-- end #search -->
+	</div>
+	<!-- end #header -->
+	<!-- end #header-wrapper -->
+	<div id="page" style="background-color:rgb(49,159,220)">
+		<div id="content">
+			{% for task in all_tasks %}
+			{% if task.publisher.account !=  user.account and task.status != '已完结'%}
+		  <div class="post">
+				<h2 class="title"><a href="#">{{task.name}}</a></h2>
+				<div>
+					<span style="float:right">
+						<p class="meta"><img src='data:image/png;base64,{{task.picUrl}}' style="width:250px;height:240px"></p>
+			    </span>
+				<p class="meta">{{task.createTime}}</p>
+				<p class="meta">悬赏总额：{{task.reward}}&nbsp&nbsp剩余悬赏：{{task.money_left}}</p>
+				<p class="meta">搜寻地点：{{task.search_province}}{{task.search_city}}{{task.search_district}}{{task.search_street}}</p>
+				<p class="meta">发布者：{{task.publisher.nickname}}</p>
+				<p class="meta">联系电话：{{task.publisher.phone}}</p>
+				<p class="meta status">状态：{{task.status}}</p>
+				</div>
+
+				<div class="entry" style="padding-bottom:0">
+					<p>{{task.info}}</p>
+					<ul style="list-style:none;height:22px;line-height:22px;display:block;color:#808080;font-size:12px;border-top:1px solid #f2f2f5;padding-top:10px;padding-left:0;margin-bottom: 0;">
+						<li style="display:inline-block;width:24%;text-align:center">评论</li>
+						<li style="display:inline-block;width:24%;border-left:1px solid #d9d9d9;text-align:center">转发</li>
+						<li style="display:inline-block;width:24%;border-left:1px solid #d9d9d9;text-align:center">关注</li>
+						<li style="display:inline-block;width:24%;border-left:1px solid #d9d9d9;text-align:center" onclick="prom('{{user.account}}','{{task.name}}')">
+							接受
+						</li>
+					</ul>
+				</div>
+		  </div>
+			{% endif %}
+			{% endfor %}
+
+		</div><!-- end #content -->
+		<div id="sidebar">
+			<ul>
+				<li style="height:600px;overflow:hidden">
+					<a name="map"></a>
+					<h2>位置信息</h2>
+					<div id="allmap"></div>
+					<div id="r-result"></div>
+				</li>
+				<li>
+					<h2>我发布的 </h2>
+					<ul style="overflow-y:scroll;overflow-x:hidden;max-height:920px;">
+						{% for my_task in my_tasks %}
+						<li>
+								<h2 class="title" style="font-size:15px;background:#464646">{{my_task.name}}</h2>
+							  <span style="float:right">
+									<p class="meta"><img src='data:image/png;base64,{{my_task.picUrl}}' style="width:130px;height:120px"></p>
+								</span>
+								<p class="meta">{{my_task.createTime}}</p>
+								<p class="meta">悬赏总额：{{my_task.reward}}&nbsp&nbsp剩余悬赏：{{my_task.money_left}}</p>
+								<p class="meta">搜寻地点：{{my_task.search_province}}{{my_task.search_city}}{{my_task.search_district}}{{my_task.search_street}}</p>
+								<p class="meta status">状态：{{my_task.status}}</p>
+								<p class="meta">参与者：
+									{% if my_task.participates_name %}
+										{% for i in my_task.participates_name %}
+											{{i}}
+										{% endfor %}
+									{% else %}
+										<span class="meta">暂无</span>
+									{% endif %}
+								</p>
+								<div class="entry" style="height:80px">
+
+									<p style="height:60px">{{my_task.info}}</p>
+									<!-- <ul style="list-style:none;display:block;color:#808080;font-size:12px;border-top:1px solid #f2f2f5;padding-top:5px;padding-left:0;margin-bottom: 0;">
+										<li style="display:inline-block;width:25%;text-align:center;" onclick="getLocation('{{my_task.name}}')">查询</li>
+										<li style="display:inline-block;width:25%;border-left:1px solid #d9d9d9;text-align:center;" onclick="task_over('{{my_task.name}}')">完结</li>
+									</ul> -->
+									<input style="float:right" id="task_over" type="button" value="完结任务" class="myButton" onclick="task_over('{{my_task.name}}')">
+									<input style="float:right" type="button" class="myButton"  value="位置查询" onclick="getLocation('{{my_task.name}}')" />
+								</div>
+						</li>
+						{% endfor %}
+
+					</ul>
+				</li>
+				<li>
+					<h2>我参与的</h2>
+					<ul style="overflow-y:scroll;overflow-x:hidden;max-height:740px;">
+						{% for join_task in join_tasks %}
+						<li>
+							<h2 class="title" style="font-size:15px;background:#464646">{{join_task.name}}</h2>
+							<span style="float:right"><p class="meta"><img src='data:image/png;base64,{{join_task.picUrl}}' style="width:130px;height:120px"></p> </span>
+							<p class="meta">{{join_task.createTime}}</p>
+							<p class="meta">悬赏总额：{{join_task.reward}}&nbsp&nbsp剩余悬赏：{{join_task.money_left}}</p>
+							<p class="meta">搜寻地点：{{join_task.search_province}}{{join_task.search_city}}{{join_task.search_district}}{{join_task.search_street}}</p>
+							<p class="meta status">状态：{{join_task.status}}</p>
+							<p class="meta">参与者：
+								{% for i in join_task.participates_name %}
+								{{i}}
+								{% endfor %}
+							</p>
+							<div class="entry" style="height:80px">
+								<p>{{join_task.info}}</p>
+								<input style="float:right" id="task_out" type="button" value="退出任务" class="myButton" onclick="task_out('{{user.account}}','{{join_task.name}}')">
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- end #sidebar -->
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #page -->
+	<div id="footer">
+
+	</div>
+	<!-- end #footer -->
+
+</body>
+</html>
+<script type="text/javascript">
+// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	map.centerAndZoom(new BMap.Point(116.331398,39.897445),11);
+	map.enableScrollWheelZoom(true);
+</script>

@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>泛搜索</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+{% load staticfiles %}
+<link href="{% static 'jquery.modal.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-xenon.css' %}" type="text/css" rel="stylesheet" />
+<link href="{% static 'jquery.modal.theme-atlant.css' %}" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'bower_components/Font-Awesome-3.2.1/css/font-awesome.min.css' %}" media="screen" />
+<script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'csrf.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery.modal.min.js' %}"></script>
+<script type="text/javascript">
+	function addFriend(account,faccount){
+		$.post('/addFriend/',{'account':account,'faccount':faccount},function(ret){
+			modal({
+				type: 'alert',
+				title: '提醒',
+				text: ret,
+				callback:function(){
+					location.reload();
+				}
+			});
+		},
+	"text");
+	}
+</script>
+</head>
+<body>
+	<div id="logo">
+		<h1>EasyFind</h1>
+		<p><em>all to participate,easy to find</em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu">
+			<ul>
+				<li><a href="/{{personInfo.account}}" class="first">返回主页</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div id="page" >
+		<div id="content">
+			<div class="post">
+				<div class="task_info" style="overflow: hidden;">
+				
+				<img src="/{{user.picUrl}}" style="width: 60px;height: 60px;float: left">
+				<div style="margin-left: 12px;display: inline-block;">
+					<div style="margin-top: 10px;">{{user.nickname}}</div>
+					<div style="margin-top: 10px;">{{user.province}}&nbsp&nbsp{{user.city}}</div>
+				</div>
+				<div style="margin-top: 20px"><i class="icon-trophy" style="padding-left: 5px">&nbsp信誉值</i>&nbsp&nbsp{{user.reputation}}</div>
+				<div style="margin-top: 10px"><i class="icon-envelope" style="padding-left: 5px">&nbsp邮箱</i>&nbsp&nbsp{{user.email}}</div>
+				<div style="margin-top: 10px"><i class="icon-phone" style="padding-left: 5px">&nbsp电话</i>&nbsp&nbsp{{user.phone}}</div>
+				</div>
+
+				<div class="entry" style="padding: 10px 0">
+					<ul >
+						<li onclick="addFriend('{{account}}','{{user.account}}')"><i class="icon-plus"></i>加好友</li>
+						<li class="items" ><i class="icon-comment-alt"></i>留言</li>
+					</ul>
+				</div>
+		  	</div>
+		
+		</div><!-- end #content -->
+
+		<div id="sidebar">
+			<ul>
+				<li id="my_publish">
+					<h2>{{user.nickname}}发布的 </h2>
+					<ul class="ul_list" >
+						{% for my_task in my_tasks %}
+						<li>
+								<h2 class="title">{{my_task.name}}</h2>
+							    	<span class="picture">
+									<p class="meta"><img src='/{{my_task.picUrl}}' ></p>
+								</span>
+								<p class="meta">{{my_task.createTime |date:"Y-m-d H:i:s"}}</p>
+								<p class="meta">
+								<i class="icon-jpy">&nbsp悬赏总额</i>&nbsp{{my_task.reward}}&nbsp&nbsp<i class="icon-jpy">&nbsp剩余悬赏</i>&nbsp{{my_task.money_left}}
+								</p>
+								<p class="meta place"><i class="icon-home">&nbsp失踪地点</i>&nbsp&nbsp{{my_task.search_province}}{{my_task.search_city}}{{my_task.search_district}}{{my_task.search_street}}</p>
+								<p class="meta status" data-id="{{my_task.status}}"><i class="icon-bullhorn">&nbsp状态</i>&nbsp&nbsp{{my_task.status}}</p>
+								<p class="meta"><i class="icon-male">&nbsp参与者&nbsp</i>
+									{% if my_task.participates_name %}
+										<span>
+												{% for i in my_task.participates_name %}
+													<span class="join" onclick="showInfo('{{i}}','{{my_task.name}}')">{{i}}</span>
+												{% endfor %}
+										<span>
+										
+									{% else %}
+										<span class="meta">暂无</span>
+									{% endif %}
+								</p>
+								<div class="entry" >
+									<p>{{my_task.info}}</p>
+								</div>
+						</li>
+						{% endfor %}
+
+					</ul>
+				</li>
+				<li>
+					<h2>{{user.nickname}}参与的</h2>
+					<ul class="ul_list" >
+						{% for join_task in join_tasks %}
+						<li id="{{join_task.name}}">
+							<h2 class="title" >{{join_task.name}}</h2>
+							<span class="picture"><p class="meta"><img src='/{{join_task.picUrl}}' ></p> </span>
+							<p class="meta">{{join_task.createTime|date:"Y-m-d H:i:s"}}</p>
+							<p class="meta"><i class="icon-jpy">&nbsp悬赏总额</i>&nbsp{{join_task.reward}}&nbsp&nbsp<i class="icon-jpy">&nbsp剩余悬赏</i>&nbsp{{join_task.money_left}}</p>
+							<p class="meta"><i class="icon-male">&nbsp发布者</i>&nbsp{{join_task.publisher_name}}</p>
+							<p class="meta place"><i class="icon-home">&nbsp失踪地点</i>&nbsp&nbsp{{join_task.search_province}}{{join_task.search_city}}{{join_task.search_district}}{{join_task.search_street}}</p>
+							<p class="meta status" data-id="{{join_task.status}}"><i class="icon-bullhorn">&nbsp状态</i>&nbsp&nbsp{{join_task.status}}</p>
+							<p class="meta"><i class="icon-male">&nbsp参与者&nbsp</i>
+										<span>
+												{% for i in join_task.participates_name %}
+													<span class="join" onclick="showInfo('{{i}}','{{join_task.name}}')">{{i}}</span>
+												{% endfor %}
+										<span>
+								
+							</p>
+							<div class="entry" >
+								<p>{{join_task.info}}</p>
+								
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+
+
+	<div id="footer"></div>
+	<!-- end #footer -->
+</body>
+</html>
