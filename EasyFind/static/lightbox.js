@@ -1,3 +1,4 @@
+//引入jQuery模块
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         //AMD
@@ -11,16 +12,18 @@
     }
 }(this, function ($) {
 
+  //lightbox构造函数
   function Lightbox(options) {
-    this.album = [];
-    this.currentImageIndex = void 0;
-    this.init();
-
+    this.album = [];  //相册
+    this.currentImageIndex = void 0;   //当前图片序号
+    this.init();  //初始化
+      
     // options
     this.options = $.extend({}, this.constructor.defaults);
     this.option(options);
   }
 
+  //默认参数设置
   Lightbox.defaults = {
     albumLabel: 'Image %1 of %2',
     alwaysShowNavOnTouchDevices: false,
@@ -42,7 +45,7 @@
   Lightbox.prototype.imageCountLabel = function(currentImageNum, totalImages) {
     return this.options.albumLabel.replace(/%1/g, currentImageNum).replace(/%2/g, totalImages);
   };
-
+  
   Lightbox.prototype.init = function() {
     this.enable();
     this.build();
@@ -155,10 +158,8 @@
       }
     } else {
       if ($link.attr('rel') === 'lightbox') {
-        // If image is not part of a set
         addToAlbum($link);
-      } else {
-        // If image is part of a set
+      } else {       
         $links = $($link.prop('tagName') + '[rel="' + $link.attr('rel') + '"]');
         for (var j = 0; j < $links.length; j = ++j) {
           addToAlbum($($links[j]));
@@ -185,7 +186,7 @@
     this.changeImage(imageNumber);
   };
 
-  
+  //切换图片
   Lightbox.prototype.changeImage = function(imageNumber) {
     var self = this;
 
@@ -199,7 +200,7 @@
 
     this.$outerContainer.addClass('animating');
 
-    // When image to show is preloaded, we send the width and height to sizeContainer()
+    // 预加载图片加入sizeContainer
     var preloader = new Image();
     preloader.onload = function() {
       var $preloader;
@@ -218,15 +219,13 @@
       $image.height(preloader.height);
 
       if (self.options.fitImagesInViewport) {
-        // Fit image inside the viewport.
-        // Take into account the border around the image and an additional 10px gutter on each side.
-
+        // 调整图片位置
         windowWidth    = $(window).width();
         windowHeight   = $(window).height();
         maxImageWidth  = windowWidth - self.containerLeftPadding - self.containerRightPadding - 20;
         maxImageHeight = windowHeight - self.containerTopPadding - self.containerBottomPadding - 120;
 
-        // Check if image size is larger then maxWidth|maxHeight in settings
+        
         if (self.options.maxWidth && self.options.maxWidth < maxImageWidth) {
           maxImageWidth = self.options.maxWidth;
         }
@@ -234,7 +233,7 @@
           maxImageHeight = self.options.maxHeight;
         }
 
-        // Is there a fitting issue?
+     
         if ((preloader.width > maxImageWidth) || (preloader.height > maxImageHeight)) {
           if ((preloader.width / maxImageWidth) > (preloader.height / maxImageHeight)) {
             imageWidth  = maxImageWidth;
@@ -256,14 +255,14 @@
     this.currentImageIndex = imageNumber;
   };
 
-  // Stretch overlay to fit the viewport
+  // 调整覆盖层大小
   Lightbox.prototype.sizeOverlay = function() {
     this.$overlay
       .width($(document).width())
       .height($(document).height());
   };
 
-  // Animate the size of the lightbox to fit the image we are showing
+  //sizeContainer
   Lightbox.prototype.sizeContainer = function(imageWidth, imageHeight) {
     var self = this;
 
@@ -291,7 +290,7 @@
     }
   };
 
-  // Display the image and its details and begin preload neighboring images.
+  //显示图片，并预加载后面一张图片
   Lightbox.prototype.showImage = function() {
     this.$lightbox.find('.lb-loader').stop(true).hide();
     this.$lightbox.find('.lb-image').fadeIn('slow');
@@ -302,11 +301,8 @@
     this.enableKeyboardNav();
   };
 
-  // Display previous and next navigation if appropriate.
+  // 更新前后翻页按钮
   Lightbox.prototype.updateNav = function() {
-    // Check to see if the browser supports touch events. If so, we take the conservative approach
-    // and assume that mouse hover events are not supported and always show prev/next navigation
-    // arrows in image sets.
     var alwaysShowNav = false;
     try {
       document.createEvent('TouchEvent');
@@ -338,12 +334,10 @@
     }
   };
 
-  // Display caption, image number, and closing button.
+  // 显示caption, image等，并关闭按钮
   Lightbox.prototype.updateDetails = function() {
     var self = this;
 
-    // Enable anchor clicks in the injected caption html.
-    // Thanks Nate Wright for the fix. @https://github.com/NateWr
     if (typeof this.album[this.currentImageIndex].title !== 'undefined' &&
       this.album[this.currentImageIndex].title !== '') {
       this.$lightbox.find('.lb-caption')
@@ -372,7 +366,7 @@
     });
   };
 
-  // Preload previous and next images in set.
+  //预加载前后图片
   Lightbox.prototype.preloadNeighboringImages = function() {
     if (this.album.length > this.currentImageIndex + 1) {
       var preloadNext = new Image();
@@ -416,7 +410,7 @@
     }
   };
 
-  // Closing time. :-(
+  //关闭lightbox
   Lightbox.prototype.end = function() {
     this.disableKeyboardNav();
     $(window).off('resize', this.sizeOverlay);
