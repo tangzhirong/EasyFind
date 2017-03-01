@@ -1,15 +1,12 @@
-// Uses Node, AMD or browser globals to create a module.
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
+        //AMD
         define(['jquery'], factory);
     } else if (typeof exports === 'object') {
-        // Node. Does not work with strict CommonJS, but
-        // only CommonJS-like environments that support module.exports,
-        // like Node.
+        //CommonJs
         module.exports = factory(require('jquery'));
     } else {
-        // Browser globals (root is window)
+        // Browser globals
         root.lightbox = factory(root.jQuery);
     }
 }(this, function ($) {
@@ -24,8 +21,6 @@
     this.option(options);
   }
 
-  // Descriptions of all options available on the demo site:
-  // http://lokeshdhakar.com/projects/lightbox2/index.html#options
   Lightbox.defaults = {
     albumLabel: 'Image %1 of %2',
     alwaysShowNavOnTouchDevices: false,
@@ -53,8 +48,7 @@
     this.build();
   };
 
-  // Loop through anchors and areamaps looking for either data-lightbox attributes or rel attributes
-  // that contain 'lightbox'. When these are clicked, start lightbox.
+  
   Lightbox.prototype.enable = function() {
     var self = this;
     $('body').on('click', 'a[rel^=lightbox], area[rel^=lightbox], a[data-lightbox], area[data-lightbox]', function(event) {
@@ -63,25 +57,24 @@
     });
   };
 
-  // Build html for the lightbox and the overlay.
-  // Attach event handlers to the new DOM elements. click click click
+  
   Lightbox.prototype.build = function() {
     var self = this;
     $('<div id="lightboxOverlay" class="lightboxOverlay"></div><div id="lightbox" class="lightbox"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" /><div class="lb-nav"><a class="lb-prev" href="" ></a><a class="lb-next" href="" ></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div>').appendTo($('body'));
 
-    // Cache jQuery objects
+    // 缓存Jquery对象
     this.$lightbox       = $('#lightbox');
     this.$overlay        = $('#lightboxOverlay');
     this.$outerContainer = this.$lightbox.find('.lb-outerContainer');
     this.$container      = this.$lightbox.find('.lb-container');
 
-    // Store css values for future lookup
+    // 暂存css变量
     this.containerTopPadding = parseInt(this.$container.css('padding-top'), 10);
     this.containerRightPadding = parseInt(this.$container.css('padding-right'), 10);
     this.containerBottomPadding = parseInt(this.$container.css('padding-bottom'), 10);
     this.containerLeftPadding = parseInt(this.$container.css('padding-left'), 10);
 
-    // Attach event handlers to the newly minted DOM elements
+    // 添加事件
     this.$overlay.hide().on('click', function() {
       self.end();
       return false;
@@ -125,7 +118,7 @@
     });
   };
 
-  // Show overlay and lightbox. If the image is part of a set, add siblings to album array.
+  //绘制lightbox
   Lightbox.prototype.start = function($link) {
     var self    = this;
     var $window = $(window);
@@ -148,7 +141,7 @@
       });
     }
 
-    // Support both data-lightbox attribute and rel attribute implementations
+    
     var dataLightboxValue = $link.attr('data-lightbox');
     var $links;
 
@@ -176,7 +169,7 @@
       }
     }
 
-    // Position Lightbox
+    // lightbox定位
     var top  = $window.scrollTop() + this.options.positionFromTop;
     var left = $window.scrollLeft();
     this.$lightbox.css({
@@ -184,7 +177,7 @@
       left: left + 'px'
     }).fadeIn(this.options.fadeDuration);
 
-    // Disable scrolling of the page while open
+    // 禁止滚动
     if (this.options.disableScrolling) {
       $('body').addClass('lb-disable-scrolling');
     }
@@ -192,7 +185,7 @@
     this.changeImage(imageNumber);
   };
 
-  // Hide most UI elements in preparation for the animated resizing of the lightbox.
+  
   Lightbox.prototype.changeImage = function(imageNumber) {
     var self = this;
 
